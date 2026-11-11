@@ -1,0 +1,23 @@
+[package]
+name = "sl0t"
+version = "0.1.0"
+description = "SL0T: a friends-only pump.fun launchpad with HIT/MISS pools and rematches"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "sl0t"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = { version = "0.31.1", features = ["init-if-needed"] }
+
+[dev-dependencies]
+base64 = "0.22"

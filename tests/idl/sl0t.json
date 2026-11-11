@@ -1,0 +1,1441 @@
+{
+  "address": "5kgnp4QxSM3VEJgrqKeDL4W86Gh2iZNkGAwBXNuMP9Hq",
+  "metadata": {
+    "name": "sl0t",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "SL0T: a friends-only pump.fun launchpad with HIT/MISS pools and rematches"
+  },
+  "instructions": [
+    {
+      "name": "init_config",
+      "discriminator": [
+        23,
+        235,
+        115,
+        232,
+        168,
+        96,
+        1,
+        231
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "InitConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_config",
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "UpdateConfigParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "add_friend",
+      "discriminator": [
+        6,
+        45,
+        26,
+        157,
+        246,
+        216,
+        236,
+        32
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "friend",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "wallet",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "remove_friend",
+      "discriminator": [
+        20,
+        242,
+        121,
+        78,
+        224,
+        41,
+        145,
+        64
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "friend",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "wallet",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "register_launch",
+      "discriminator": [
+        114,
+        114,
+        67,
+        23,
+        41,
+        70,
+        0,
+        225
+      ],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "friend"
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "bonding_curve"
+        },
+        {
+          "name": "launch",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "creator_stake",
+          "writable": true
+        },
+        {
+          "name": "instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "stake",
+      "discriminator": [
+        206,
+        176,
+        202,
+        18,
+        200,
+        209,
+        179,
+        108
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "friend"
+        },
+        {
+          "name": "launch",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "stake",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "side",
+          "type": {
+            "defined": {
+              "name": "Side"
+            }
+          }
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "stake_rematch",
+      "discriminator": [
+        67,
+        187,
+        100,
+        40,
+        115,
+        203,
+        190,
+        202
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "friend"
+        },
+        {
+          "name": "launch",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "stake",
+          "writable": true
+        },
+        {
+          "name": "rematch",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "side",
+          "type": {
+            "defined": {
+              "name": "Side"
+            }
+          }
+        },
+        {
+          "name": "expected_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "resolve",
+      "discriminator": [
+        246,
+        150,
+        236,
+        206,
+        108,
+        63,
+        58,
+        10
+      ],
+      "accounts": [
+        {
+          "name": "resolver",
+          "signer": true
+        },
+        {
+          "name": "launch",
+          "writable": true
+        },
+        {
+          "name": "bonding_curve"
+        },
+        {
+          "name": "pump_global"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim",
+      "discriminator": [
+        62,
+        198,
+        214,
+        193,
+        213,
+        159,
+        108,
+        210
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "launch",
+          "writable": true
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "stake",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_loss",
+      "discriminator": [
+        183,
+        227,
+        255,
+        34,
+        9,
+        132,
+        178,
+        228
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "launch",
+          "writable": true
+        },
+        {
+          "name": "stake",
+          "writable": true
+        },
+        {
+          "name": "rematch",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "sweep_dust",
+      "discriminator": [
+        9,
+        49,
+        242,
+        88,
+        156,
+        84,
+        109,
+        15
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "launch"
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "creator",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Config",
+      "discriminator": [
+        155,
+        12,
+        170,
+        224,
+        30,
+        250,
+        204,
+        130
+      ]
+    },
+    {
+      "name": "Friend",
+      "discriminator": [
+        225,
+        158,
+        162,
+        170,
+        156,
+        194,
+        226,
+        68
+      ]
+    },
+    {
+      "name": "Launch",
+      "discriminator": [
+        144,
+        51,
+        51,
+        163,
+        206,
+        85,
+        213,
+        38
+      ]
+    },
+    {
+      "name": "Rematch",
+      "discriminator": [
+        123,
+        191,
+        56,
+        79,
+        25,
+        175,
+        251,
+        210
+      ]
+    },
+    {
+      "name": "Stake",
+      "discriminator": [
+        150,
+        197,
+        176,
+        29,
+        55,
+        132,
+        112,
+        149
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "Claimed",
+      "discriminator": [
+        217,
+        192,
+        123,
+        72,
+        108,
+        150,
+        248,
+        33
+      ]
+    },
+    {
+      "name": "ConfigUpdated",
+      "discriminator": [
+        40,
+        241,
+        230,
+        122,
+        11,
+        19,
+        198,
+        194
+      ]
+    },
+    {
+      "name": "DustSwept",
+      "discriminator": [
+        131,
+        70,
+        179,
+        205,
+        208,
+        80,
+        13,
+        168
+      ]
+    },
+    {
+      "name": "FriendAdded",
+      "discriminator": [
+        209,
+        122,
+        33,
+        111,
+        75,
+        239,
+        0,
+        160
+      ]
+    },
+    {
+      "name": "FriendRemoved",
+      "discriminator": [
+        22,
+        199,
+        194,
+        63,
+        0,
+        125,
+        67,
+        190
+      ]
+    },
+    {
+      "name": "LaunchRegistered",
+      "discriminator": [
+        158,
+        211,
+        66,
+        169,
+        249,
+        238,
+        122,
+        253
+      ]
+    },
+    {
+      "name": "LossSettled",
+      "discriminator": [
+        72,
+        169,
+        89,
+        164,
+        169,
+        182,
+        219,
+        102
+      ]
+    },
+    {
+      "name": "Resolved",
+      "discriminator": [
+        148,
+        46,
+        187,
+        66,
+        35,
+        1,
+        255,
+        147
+      ]
+    },
+    {
+      "name": "Staked",
+      "discriminator": [
+        11,
+        146,
+        45,
+        205,
+        230,
+        58,
+        213,
+        240
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NotOnGuestList",
+      "msg": "This floor is guest list only."
+    },
+    {
+      "code": 6001,
+      "name": "StakesClosed",
+      "msg": "Stakes on this coin are closed."
+    },
+    {
+      "code": 6002,
+      "name": "RematchExpired",
+      "msg": "Your rematch expired."
+    },
+    {
+      "code": 6003,
+      "name": "RematchAmountFixed",
+      "msg": "Rematch amount is fixed at 2x what you lost."
+    },
+    {
+      "code": 6004,
+      "name": "MaxStakeExceeded",
+      "msg": "Max stake exceeded."
+    },
+    {
+      "code": 6005,
+      "name": "AlreadyResolved",
+      "msg": "This launch is already resolved."
+    },
+    {
+      "code": 6006,
+      "name": "NotResolvable",
+      "msg": "This launch can't be resolved yet."
+    },
+    {
+      "code": 6007,
+      "name": "NotResolved",
+      "msg": "This launch isn't resolved yet."
+    },
+    {
+      "code": 6008,
+      "name": "Paused",
+      "msg": "SL0T is paused."
+    },
+    {
+      "code": 6009,
+      "name": "InvalidBondingCurve",
+      "msg": "That isn't the pump.fun bonding curve for this mint."
+    },
+    {
+      "code": 6010,
+      "name": "InvalidPumpGlobal",
+      "msg": "That isn't pump.fun's Global account."
+    },
+    {
+      "code": 6011,
+      "name": "CurveAlreadyComplete",
+      "msg": "This curve already graduated."
+    },
+    {
+      "code": 6012,
+      "name": "NotCurveCreator",
+      "msg": "Only the coin's creator can register it."
+    },
+    {
+      "code": 6013,
+      "name": "CreateNotInTransaction",
+      "msg": "register_launch must run in the same transaction as pump.fun's create."
+    },
+    {
+      "code": 6014,
+      "name": "SideLocked",
+      "msg": "You already staked the other side of this launch."
+    },
+    {
+      "code": 6015,
+      "name": "ZeroAmount",
+      "msg": "Amount must be more than zero."
+    },
+    {
+      "code": 6016,
+      "name": "RematchUsed",
+      "msg": "Your rematch was already used."
+    },
+    {
+      "code": 6017,
+      "name": "RematchOnSourceLaunch",
+      "msg": "A rematch can't go on the launch you lost on."
+    },
+    {
+      "code": 6018,
+      "name": "RematchAboveMax",
+      "msg": "Rematch amount is above the max stake."
+    },
+    {
+      "code": 6019,
+      "name": "NotAWinner",
+      "msg": "This stake didn't win; use claim_loss."
+    },
+    {
+      "code": 6020,
+      "name": "NotALoser",
+      "msg": "This stake didn't lose; use claim."
+    },
+    {
+      "code": 6021,
+      "name": "NotAllSettled",
+      "msg": "Not every stake on this launch has been claimed yet."
+    },
+    {
+      "code": 6022,
+      "name": "MathOverflow",
+      "msg": "Math overflow."
+    },
+    {
+      "code": 6023,
+      "name": "Unauthorized",
+      "msg": "Only the admin can do that."
+    },
+    {
+      "code": 6024,
+      "name": "InvalidConfig",
+      "msg": "Config value out of range."
+    }
+  ],
+  "types": [
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "keeper",
+            "type": "pubkey"
+          },
+          {
+            "name": "pump_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "launch_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "max_stake_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "window_secs",
+            "type": "i64"
+          },
+          {
+            "name": "stake_close_secs",
+            "type": "i64"
+          },
+          {
+            "name": "rematch_secs",
+            "type": "i64"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Friend",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "added_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LaunchState",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Open"
+          },
+          {
+            "name": "Hit"
+          },
+          {
+            "name": "Miss"
+          },
+          {
+            "name": "Void"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Side",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Hit"
+          },
+          {
+            "name": "Miss"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Launch",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bonding_curve",
+            "type": "pubkey"
+          },
+          {
+            "name": "pump_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "opened_at",
+            "type": "i64"
+          },
+          {
+            "name": "deadline",
+            "type": "i64"
+          },
+          {
+            "name": "stake_close_at",
+            "type": "i64"
+          },
+          {
+            "name": "resolved_at",
+            "type": "i64"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "LaunchState"
+              }
+            }
+          },
+          {
+            "name": "hit_total",
+            "type": "u64"
+          },
+          {
+            "name": "miss_total",
+            "type": "u64"
+          },
+          {
+            "name": "stake_count",
+            "type": "u32"
+          },
+          {
+            "name": "settled_count",
+            "type": "u32"
+          },
+          {
+            "name": "evidence_slot",
+            "type": "u64"
+          },
+          {
+            "name": "evidence_pct_bps",
+            "type": "u16"
+          },
+          {
+            "name": "evidence_complete",
+            "type": "bool"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Stake",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "Side"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "is_rematch",
+            "type": "bool"
+          },
+          {
+            "name": "claimed",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Rematch",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount_lost",
+            "type": "u64"
+          },
+          {
+            "name": "source_launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "expires_at",
+            "type": "i64"
+          },
+          {
+            "name": "used",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitConfigParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "keeper",
+            "type": "pubkey"
+          },
+          {
+            "name": "pump_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "launch_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "max_stake_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "window_secs",
+            "type": "i64"
+          },
+          {
+            "name": "stake_close_secs",
+            "type": "i64"
+          },
+          {
+            "name": "rematch_secs",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateConfigParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "keeper",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "pump_program",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "launch_fee_lamports",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "max_stake_lamports",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "window_secs",
+            "type": {
+              "option": "i64"
+            }
+          },
+          {
+            "name": "stake_close_secs",
+            "type": {
+              "option": "i64"
+            }
+          },
+          {
+            "name": "rematch_secs",
+            "type": {
+              "option": "i64"
+            }
+          },
+          {
+            "name": "paused",
+            "type": {
+              "option": "bool"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConfigUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "keeper",
+            "type": "pubkey"
+          },
+          {
+            "name": "pump_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "launch_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "max_stake_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "window_secs",
+            "type": "i64"
+          },
+          {
+            "name": "stake_close_secs",
+            "type": "i64"
+          },
+          {
+            "name": "rematch_secs",
+            "type": "i64"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FriendAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "FriendRemoved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LaunchRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "opened_at",
+            "type": "i64"
+          },
+          {
+            "name": "deadline",
+            "type": "i64"
+          },
+          {
+            "name": "stake_close_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Staked",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "Side"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "is_rematch",
+            "type": "bool"
+          },
+          {
+            "name": "hit_total",
+            "type": "u64"
+          },
+          {
+            "name": "miss_total",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Resolved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "LaunchState"
+              }
+            }
+          },
+          {
+            "name": "hit_total",
+            "type": "u64"
+          },
+          {
+            "name": "miss_total",
+            "type": "u64"
+          },
+          {
+            "name": "evidence_slot",
+            "type": "u64"
+          },
+          {
+            "name": "evidence_pct_bps",
+            "type": "u16"
+          },
+          {
+            "name": "curve_complete",
+            "type": "bool"
+          },
+          {
+            "name": "resolver",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Claimed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "Side"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "payout",
+            "type": "u64"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "LaunchState"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "LossSettled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "Side"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "rematch_amount",
+            "type": "u64"
+          },
+          {
+            "name": "rematch_expires_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DustSwept",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "to",
+            "type": "pubkey"
+          },
+          {
+            "name": "lamports",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}

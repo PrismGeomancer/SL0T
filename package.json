@@ -1,0 +1,32 @@
+{
+  "name": "sl0t",
+  "private": true,
+  "version": "0.1.0",
+  "description": "SL0T: a friends-only Solana launchpad. Every launch is a pull.",
+  "type": "module",
+  "packageManager": "pnpm@10.8.1",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "idl:gen": "node scripts/gen-idl.mjs",
+    "idl:sync": "node scripts/sync-idl.mjs",
+    "test:program": "vitest run --config tests/vitest.config.ts",
+    "admin": "tsx scripts/admin.ts",
+    "keeper": "pnpm -C keeper keeper",
+    "build:app": "pnpm -C app build"
+  },
+  "devDependencies": {
+    "@coral-xyz/anchor": "0.31.1",
+    "@solana/web3.js": "^1.98.0",
+    "anchor-bankrun": "0.5.0",
+    "bs58": "^6.0.0",
+    "solana-bankrun": "0.4.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3",
+    "vitest": "^3.2.4"
+  },
+  "pnpm": {
+    "overrides": { "rpc-websockets": "9.1.1" },
+    "peerDependencyRules": { "allowedVersions": { "@coral-xyz/anchor": "0.31", "solana-bankrun": "0.4" } },
+    "onlyBuiltDependencies": ["bufferutil", "utf-8-validate", "esbuild"]
+  }
+}
