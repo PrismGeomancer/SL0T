@@ -8,6 +8,313 @@
   },
   "instructions": [
     {
+      "name": "add_friend",
+      "discriminator": [
+        6,
+        45,
+        26,
+        157,
+        246,
+        216,
+        236,
+        32
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "friend",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  114,
+                  105,
+                  101,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "wallet",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "claim",
+      "docs": [
+        "Winners and VOID refunds. Closes the Stake (rent back to the owner)."
+      ],
+      "discriminator": [
+        62,
+        198,
+        214,
+        193,
+        213,
+        159,
+        108,
+        210
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "stake"
+          ]
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch.mint",
+                "account": "Launch"
+              }
+            ]
+          },
+          "relations": [
+            "stake"
+          ]
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "stake",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_loss",
+      "docs": [
+        "Losers acknowledge the loss: nothing is paid, the Stake closes (rent",
+        "back) and a rematch at 2x opens (or is overwritten)."
+      ],
+      "discriminator": [
+        183,
+        227,
+        255,
+        34,
+        9,
+        132,
+        178,
+        228
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "stake"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch.mint",
+                "account": "Launch"
+              }
+            ]
+          },
+          "relations": [
+            "stake"
+          ]
+        },
+        {
+          "name": "stake",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "rematch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  109,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "init_config",
       "discriminator": [
         23,
@@ -27,7 +334,22 @@
         },
         {
           "name": "config",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
         },
         {
           "name": "system_program",
@@ -46,110 +368,11 @@
       ]
     },
     {
-      "name": "update_config",
-      "discriminator": [
-        29,
-        158,
-        252,
-        191,
-        10,
-        83,
-        219,
-        99
-      ],
-      "accounts": [
-        {
-          "name": "admin",
-          "signer": true
-        },
-        {
-          "name": "config",
-          "writable": true
-        }
-      ],
-      "args": [
-        {
-          "name": "params",
-          "type": {
-            "defined": {
-              "name": "UpdateConfigParams"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "add_friend",
-      "discriminator": [
-        6,
-        45,
-        26,
-        157,
-        246,
-        216,
-        236,
-        32
-      ],
-      "accounts": [
-        {
-          "name": "admin",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "config"
-        },
-        {
-          "name": "friend",
-          "writable": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": [
-        {
-          "name": "wallet",
-          "type": "pubkey"
-        }
-      ]
-    },
-    {
-      "name": "remove_friend",
-      "discriminator": [
-        20,
-        242,
-        121,
-        78,
-        224,
-        41,
-        145,
-        64
-      ],
-      "accounts": [
-        {
-          "name": "admin",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "config"
-        },
-        {
-          "name": "friend",
-          "writable": true
-        }
-      ],
-      "args": [
-        {
-          "name": "wallet",
-          "type": "pubkey"
-        }
-      ]
-    },
-    {
       "name": "register_launch",
+      "docs": [
+        "Must sit in the same transaction as pump.fun's `create_v2` (or legacy",
+        "`create`) for the same mint."
+      ],
       "discriminator": [
         114,
         114,
@@ -167,10 +390,47 @@
           "signer": true
         },
         {
-          "name": "config"
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
         },
         {
-          "name": "friend"
+          "name": "friend",
+          "docs": [
+            "account maps to NotOnGuestList."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  114,
+                  105,
+                  101,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              }
+            ]
+          }
         },
         {
           "name": "mint"
@@ -180,15 +440,74 @@
         },
         {
           "name": "launch",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
         },
         {
           "name": "vault",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              }
+            ]
+          }
         },
         {
           "name": "creator_stake",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              }
+            ]
+          }
         },
         {
           "name": "instructions",
@@ -197,6 +516,134 @@
         {
           "name": "system_program",
           "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "remove_friend",
+      "discriminator": [
+        20,
+        242,
+        121,
+        78,
+        224,
+        41,
+        145,
+        64
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "friend",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  114,
+                  105,
+                  101,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "wallet"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "wallet",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "resolve",
+      "docs": [
+        "Permissionless. The outcome comes from the pump.fun curve, not from the",
+        "caller: complete = HIT (any time), not complete after the deadline =",
+        "MISS, one side empty = VOID."
+      ],
+      "discriminator": [
+        246,
+        150,
+        236,
+        206,
+        108,
+        63,
+        58,
+        10
+      ],
+      "accounts": [
+        {
+          "name": "resolver",
+          "docs": [
+            "Anyone. Pays the transaction fee, nothing else."
+          ],
+          "signer": true
+        },
+        {
+          "name": "launch",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch.mint",
+                "account": "Launch"
+              }
+            ]
+          }
+        },
+        {
+          "name": "bonding_curve"
+        },
+        {
+          "name": "pump_global"
         }
       ],
       "args": []
@@ -220,22 +667,116 @@
           "signer": true
         },
         {
-          "name": "config"
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
         },
         {
-          "name": "friend"
+          "name": "friend",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  114,
+                  105,
+                  101,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
         },
         {
           "name": "launch",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch.mint",
+                "account": "Launch"
+              }
+            ]
+          }
         },
         {
           "name": "vault",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              }
+            ]
+          }
         },
         {
           "name": "stake",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
         },
         {
           "name": "system_program",
@@ -259,6 +800,10 @@
     },
     {
       "name": "stake_rematch",
+      "docs": [
+        "`expected_amount` is what the wallet shows; it must equal exactly 2x",
+        "the lost amount."
+      ],
       "discriminator": [
         67,
         187,
@@ -273,29 +818,146 @@
         {
           "name": "owner",
           "writable": true,
-          "signer": true
+          "signer": true,
+          "relations": [
+            "rematch"
+          ]
         },
         {
-          "name": "config"
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
         },
         {
-          "name": "friend"
+          "name": "friend",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  114,
+                  105,
+                  101,
+                  110,
+                  100
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
         },
         {
           "name": "launch",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch.mint",
+                "account": "Launch"
+              }
+            ]
+          }
         },
         {
           "name": "vault",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              }
+            ]
+          }
         },
         {
           "name": "stake",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  97,
+                  107,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
         },
         {
           "name": "rematch",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  109,
+                  97,
+                  116,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "owner"
+              }
+            ]
+          }
         },
         {
           "name": "system_program",
@@ -318,114 +980,12 @@
       ]
     },
     {
-      "name": "resolve",
-      "discriminator": [
-        246,
-        150,
-        236,
-        206,
-        108,
-        63,
-        58,
-        10
-      ],
-      "accounts": [
-        {
-          "name": "resolver",
-          "signer": true
-        },
-        {
-          "name": "launch",
-          "writable": true
-        },
-        {
-          "name": "bonding_curve"
-        },
-        {
-          "name": "pump_global"
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "claim",
-      "discriminator": [
-        62,
-        198,
-        214,
-        193,
-        213,
-        159,
-        108,
-        210
-      ],
-      "accounts": [
-        {
-          "name": "owner",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "launch",
-          "writable": true
-        },
-        {
-          "name": "vault",
-          "writable": true
-        },
-        {
-          "name": "stake",
-          "writable": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "claim_loss",
-      "discriminator": [
-        183,
-        227,
-        255,
-        34,
-        9,
-        132,
-        178,
-        228
-      ],
-      "accounts": [
-        {
-          "name": "owner",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "config"
-        },
-        {
-          "name": "launch",
-          "writable": true
-        },
-        {
-          "name": "stake",
-          "writable": true
-        },
-        {
-          "name": "rematch",
-          "writable": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": []
-    },
-    {
       "name": "sweep_dust",
+      "docs": [
+        "Admin only, once every stake is settled: whatever is left in the vault",
+        "(rounding dust + the vault's rent deposit) goes to the launch creator,",
+        "who paid that rent. The vault account disappears."
+      ],
       "discriminator": [
         9,
         49,
@@ -439,17 +999,73 @@
       "accounts": [
         {
           "name": "admin",
-          "signer": true
+          "signer": true,
+          "relations": [
+            "config"
+          ]
         },
         {
-          "name": "config"
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
         },
         {
-          "name": "launch"
+          "name": "launch",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  97,
+                  117,
+                  110,
+                  99,
+                  104
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch.mint",
+                "account": "Launch"
+              }
+            ]
+          }
         },
         {
           "name": "vault",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "launch"
+              }
+            ]
+          }
         },
         {
           "name": "creator",
@@ -461,6 +1077,61 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "update_config",
+      "docs": [
+        "Window and stake-close are copied into each Launch at open, so these",
+        "changes only ever apply to launches opened afterwards."
+      ],
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "UpdateConfigParams"
+            }
+          }
+        }
+      ]
     }
   ],
   "accounts": [
@@ -778,6 +1449,50 @@
   ],
   "types": [
     {
+      "name": "Claimed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "Side"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "payout",
+            "type": "u64"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "LaunchState"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "Config",
       "type": {
         "kind": "struct",
@@ -788,6 +1503,9 @@
           },
           {
             "name": "keeper",
+            "docs": [
+              "Informational: resolve is permissionless, this is who usually calls it."
+            ],
             "type": "pubkey"
           },
           {
@@ -826,6 +1544,74 @@
       }
     },
     {
+      "name": "ConfigUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "keeper",
+            "type": "pubkey"
+          },
+          {
+            "name": "pump_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "launch_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "max_stake_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "window_secs",
+            "type": "i64"
+          },
+          {
+            "name": "stake_close_secs",
+            "type": "i64"
+          },
+          {
+            "name": "rematch_secs",
+            "type": "i64"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DustSwept",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "to",
+            "type": "pubkey"
+          },
+          {
+            "name": "lamports",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "Friend",
       "type": {
         "kind": "struct",
@@ -846,41 +1632,74 @@
       }
     },
     {
-      "name": "LaunchState",
+      "name": "FriendAdded",
       "type": {
-        "kind": "enum",
-        "variants": [
+        "kind": "struct",
+        "fields": [
           {
-            "name": "Open"
-          },
-          {
-            "name": "Hit"
-          },
-          {
-            "name": "Miss"
-          },
-          {
-            "name": "Void"
+            "name": "wallet",
+            "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "Side",
+      "name": "FriendRemoved",
       "type": {
-        "kind": "enum",
-        "variants": [
+        "kind": "struct",
+        "fields": [
           {
-            "name": "Hit"
+            "name": "wallet",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitConfigParams",
+      "docs": [
+        "pump.fun on mainnet and devnet: 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P (set in Config)."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "keeper",
+            "type": "pubkey"
           },
           {
-            "name": "Miss"
+            "name": "pump_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "launch_fee_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "max_stake_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "window_secs",
+            "type": "i64"
+          },
+          {
+            "name": "stake_close_secs",
+            "type": "i64"
+          },
+          {
+            "name": "rematch_secs",
+            "type": "i64"
           }
         ]
       }
     },
     {
       "name": "Launch",
+      "docs": [
+        "Field order matters: the keeper filters on `state` at byte offset 168",
+        "(8 discriminator + 4 * 32 pubkeys + 4 * 8 i64)."
+      ],
       "type": {
         "kind": "struct",
         "fields": [
@@ -898,6 +1717,9 @@
           },
           {
             "name": "pump_program",
+            "docs": [
+              "Copied from config at open, so a later pump.fun migration can't strand it."
+            ],
             "type": "pubkey"
           },
           {
@@ -964,6 +1786,196 @@
       }
     },
     {
+      "name": "LaunchRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "opened_at",
+            "type": "i64"
+          },
+          {
+            "name": "deadline",
+            "type": "i64"
+          },
+          {
+            "name": "stake_close_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LaunchState",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Open"
+          },
+          {
+            "name": "Hit"
+          },
+          {
+            "name": "Miss"
+          },
+          {
+            "name": "Void"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LossSettled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "Side"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "rematch_amount",
+            "type": "u64"
+          },
+          {
+            "name": "rematch_expires_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Rematch",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount_lost",
+            "type": "u64"
+          },
+          {
+            "name": "source_launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "expires_at",
+            "type": "i64"
+          },
+          {
+            "name": "used",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Resolved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "state",
+            "type": {
+              "defined": {
+                "name": "LaunchState"
+              }
+            }
+          },
+          {
+            "name": "hit_total",
+            "type": "u64"
+          },
+          {
+            "name": "miss_total",
+            "type": "u64"
+          },
+          {
+            "name": "evidence_slot",
+            "type": "u64"
+          },
+          {
+            "name": "evidence_pct_bps",
+            "type": "u16"
+          },
+          {
+            "name": "curve_complete",
+            "type": "bool"
+          },
+          {
+            "name": "resolver",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Side",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Hit"
+          },
+          {
+            "name": "Miss"
+          }
+        ]
+      }
+    },
+    {
       "name": "Stake",
       "type": {
         "kind": "struct",
@@ -1004,69 +2016,45 @@
       }
     },
     {
-      "name": "Rematch",
+      "name": "Staked",
       "type": {
         "kind": "struct",
         "fields": [
+          {
+            "name": "launch",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
           {
             "name": "owner",
             "type": "pubkey"
           },
           {
-            "name": "amount_lost",
+            "name": "side",
+            "type": {
+              "defined": {
+                "name": "Side"
+              }
+            }
+          },
+          {
+            "name": "amount",
             "type": "u64"
           },
           {
-            "name": "source_launch",
-            "type": "pubkey"
-          },
-          {
-            "name": "expires_at",
-            "type": "i64"
-          },
-          {
-            "name": "used",
+            "name": "is_rematch",
             "type": "bool"
           },
           {
-            "name": "bump",
-            "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "InitConfigParams",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "keeper",
-            "type": "pubkey"
-          },
-          {
-            "name": "pump_program",
-            "type": "pubkey"
-          },
-          {
-            "name": "launch_fee_lamports",
+            "name": "hit_total",
             "type": "u64"
           },
           {
-            "name": "max_stake_lamports",
+            "name": "miss_total",
             "type": "u64"
-          },
-          {
-            "name": "window_secs",
-            "type": "i64"
-          },
-          {
-            "name": "stake_close_secs",
-            "type": "i64"
-          },
-          {
-            "name": "rematch_secs",
-            "type": "i64"
           }
         ]
       }
@@ -1129,310 +2117,6 @@
             "type": {
               "option": "bool"
             }
-          }
-        ]
-      }
-    },
-    {
-      "name": "ConfigUpdated",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "admin",
-            "type": "pubkey"
-          },
-          {
-            "name": "keeper",
-            "type": "pubkey"
-          },
-          {
-            "name": "pump_program",
-            "type": "pubkey"
-          },
-          {
-            "name": "launch_fee_lamports",
-            "type": "u64"
-          },
-          {
-            "name": "max_stake_lamports",
-            "type": "u64"
-          },
-          {
-            "name": "window_secs",
-            "type": "i64"
-          },
-          {
-            "name": "stake_close_secs",
-            "type": "i64"
-          },
-          {
-            "name": "rematch_secs",
-            "type": "i64"
-          },
-          {
-            "name": "paused",
-            "type": "bool"
-          }
-        ]
-      }
-    },
-    {
-      "name": "FriendAdded",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "wallet",
-            "type": "pubkey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "FriendRemoved",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "wallet",
-            "type": "pubkey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "LaunchRegistered",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "launch",
-            "type": "pubkey"
-          },
-          {
-            "name": "mint",
-            "type": "pubkey"
-          },
-          {
-            "name": "creator",
-            "type": "pubkey"
-          },
-          {
-            "name": "fee",
-            "type": "u64"
-          },
-          {
-            "name": "opened_at",
-            "type": "i64"
-          },
-          {
-            "name": "deadline",
-            "type": "i64"
-          },
-          {
-            "name": "stake_close_at",
-            "type": "i64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Staked",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "launch",
-            "type": "pubkey"
-          },
-          {
-            "name": "mint",
-            "type": "pubkey"
-          },
-          {
-            "name": "owner",
-            "type": "pubkey"
-          },
-          {
-            "name": "side",
-            "type": {
-              "defined": {
-                "name": "Side"
-              }
-            }
-          },
-          {
-            "name": "amount",
-            "type": "u64"
-          },
-          {
-            "name": "is_rematch",
-            "type": "bool"
-          },
-          {
-            "name": "hit_total",
-            "type": "u64"
-          },
-          {
-            "name": "miss_total",
-            "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Resolved",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "launch",
-            "type": "pubkey"
-          },
-          {
-            "name": "mint",
-            "type": "pubkey"
-          },
-          {
-            "name": "state",
-            "type": {
-              "defined": {
-                "name": "LaunchState"
-              }
-            }
-          },
-          {
-            "name": "hit_total",
-            "type": "u64"
-          },
-          {
-            "name": "miss_total",
-            "type": "u64"
-          },
-          {
-            "name": "evidence_slot",
-            "type": "u64"
-          },
-          {
-            "name": "evidence_pct_bps",
-            "type": "u16"
-          },
-          {
-            "name": "curve_complete",
-            "type": "bool"
-          },
-          {
-            "name": "resolver",
-            "type": "pubkey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "Claimed",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "launch",
-            "type": "pubkey"
-          },
-          {
-            "name": "mint",
-            "type": "pubkey"
-          },
-          {
-            "name": "owner",
-            "type": "pubkey"
-          },
-          {
-            "name": "side",
-            "type": {
-              "defined": {
-                "name": "Side"
-              }
-            }
-          },
-          {
-            "name": "amount",
-            "type": "u64"
-          },
-          {
-            "name": "payout",
-            "type": "u64"
-          },
-          {
-            "name": "state",
-            "type": {
-              "defined": {
-                "name": "LaunchState"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "LossSettled",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "launch",
-            "type": "pubkey"
-          },
-          {
-            "name": "mint",
-            "type": "pubkey"
-          },
-          {
-            "name": "owner",
-            "type": "pubkey"
-          },
-          {
-            "name": "side",
-            "type": {
-              "defined": {
-                "name": "Side"
-              }
-            }
-          },
-          {
-            "name": "amount",
-            "type": "u64"
-          },
-          {
-            "name": "rematch_amount",
-            "type": "u64"
-          },
-          {
-            "name": "rematch_expires_at",
-            "type": "i64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "DustSwept",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "launch",
-            "type": "pubkey"
-          },
-          {
-            "name": "mint",
-            "type": "pubkey"
-          },
-          {
-            "name": "to",
-            "type": "pubkey"
-          },
-          {
-            "name": "lamports",
-            "type": "u64"
           }
         ]
       }
