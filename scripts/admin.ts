@@ -11,11 +11,12 @@
  *
  * Env: RPC_URL (default devnet), ADMIN_KEYPAIR (path, default ~/.config/solana/id.json), PROGRAM_ID (default: IDL address)
  */
-import { AnchorProvider, BN, Program, Wallet, type Idl } from '@coral-xyz/anchor';
+import anchor, { type Idl } from '@coral-xyz/anchor';
 import { Connection, Keypair, LAMPORTS_PER_SOL, PublicKey, SystemProgram } from '@solana/web3.js';
 import { readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 
+const { AnchorProvider, BN, Program, Wallet } = anchor;
 const idl = JSON.parse(readFileSync(new URL('../app/src/idl/sl0t.json', import.meta.url), 'utf8')) as Idl & { address: string };
 const PUMP = new PublicKey('6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P');
 
@@ -99,7 +100,7 @@ async function main() {
       break;
     }
     case 'show':
-      console.log(JSON.stringify(await program.account.config.fetch(config), (_, v) => (v?.toBase58 ? v.toBase58() : v?.toString?.() ?? v), 2));
+      console.log(JSON.stringify(await program.account.config.fetch(config), (_, v) => (v && typeof v === "object" && v.constructor?.name === "PublicKey" ? v.toBase58() : v && v.constructor?.name === "BN" ? v.toString() : v), 2));
       break;
     case 'friends':
       for (const f of await program.account.friend.all()) console.log((f.account as any).wallet.toBase58());

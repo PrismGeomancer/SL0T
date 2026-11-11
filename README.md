@@ -69,6 +69,10 @@ For mainnet, start small: `--fee 0.01 --max 0.05`.
 
 Other admin commands: `pnpm admin remove <wallet>`, `pnpm admin update --pause|--unpause|--fee x|...`, `pnpm admin friends`, `pnpm admin sweep <mint>`.
 
+## Local end-to-end test (free, no faucet)
+
+`scripts/e2e-local.ts` (launch, MISS, claims, 2x rematch, VOID) and `scripts/e2e-hit.ts` (a real graduation, early HIT) run against a local validator that has the real pump.fun program cloned from devnet (`solana-test-validator --clone-upgradeable-program 6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P ...`, plus the pump/mayhem/fee accounts the SDK lists). They need funded `keys/{admin,keeper,ana,bo}.json` (git-ignored), a deployed program and an initialised config with a short window (`--window-h 0.05 --close-h 0.01`). Run: `RPC_URL=http://127.0.0.1:8899 pnpm tsx scripts/e2e-local.ts`.
+
 ## Keeper
 
 ```sh
