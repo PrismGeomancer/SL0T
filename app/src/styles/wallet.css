@@ -1,0 +1,8 @@
+/* Wallet modal, dressed for the floor */
+.wallet-adapter-modal-wrapper { background: var(--surface) !important; border: 1px solid var(--line); border-radius: 18px !important; box-shadow: 0 30px 80px #000c, 0 0 0 1px #ffc24b22 !important; font-family: var(--f-ui) !important; }
+.wallet-adapter-modal-title { font-family: var(--f-display) !important; font-weight: 400 !important; color: var(--text) !important; }
+.wallet-adapter-modal-overlay { background: #07060acc !important; backdrop-filter: blur(8px); }
+.wallet-adapter-button { font-family: var(--f-ui) !important; border-radius: 12px !important; }
+.wallet-adapter-modal-list .wallet-adapter-button:not([disabled]):hover { background: #ffc24b14 !important; }
+.wallet-adapter-modal-button-close { background: #ffffff10 !important; }
+.wallet-adapter-modal-list-more { color: var(--muted) !important; font-family: var(--f-mono) !important; }
