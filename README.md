@@ -45,7 +45,9 @@ pnpm -C app test && pnpm -C app build
 pnpm -C keeper typecheck && pnpm -C keeper test
 ```
 
-Until the Anchor toolchain has run once, `app/src/idl/sl0t.json` comes from `scripts/gen-idl.mjs` (same discriminators and layout). CI compares the two and warns if they drift.
+**Toolchain note:** Solana 2.1.21's bundled Cargo is 1.79, so a few crates are pinned in `Cargo.lock` (blake3, hashbrown, indexmap, zeroize, unicode-segmentation, borsh, proc-macro-crate, toml_edit). Commit the lockfile and don't run a blanket `cargo update`.
+
+If you change the program, run `anchor build && pnpm idl:sync`; the compiler's IDL is the source of truth. Before the first build, `app/src/idl/sl0t.json` comes from `scripts/gen-idl.mjs` (same discriminators and layout). CI compares the two and warns if they drift.
 
 The program ID is `5kgnp4QxSM3VEJgrqKeDL4W86Gh2iZNkGAwBXNuMP9Hq`. Its keypair is in `target/deploy/sl0t-keypair.json`, which is git-ignored. Back it up and never commit it. To use your own ID: `anchor keys sync`, then `pnpm idl:gen`.
 
