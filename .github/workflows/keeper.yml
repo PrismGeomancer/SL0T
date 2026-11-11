@@ -1,0 +1,33 @@
+name: keeper
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # GitHub may run this several minutes late
+  workflow_dispatch:
+
+concurrency:
+  group: sl0t-keeper
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --filter @sl0t/keeper...
+      - name: Resolve open launches
+        env:
+          RPC_URL: ${{ secrets.RPC_URL }}
+          KEEPER_SECRET_KEY: ${{ secrets.KEEPER_SECRET_KEY }}
+          PROGRAM_ID: ${{ vars.PROGRAM_ID }}
+          CLUSTER: ${{ vars.CLUSTER || 'devnet' }}
+        run: pnpm -C keeper keeper

@@ -1,0 +1,46 @@
+name: program
+
+on:
+  push:
+    branches: [main]
+    paths: ['programs/**', 'tests/**', 'Anchor.toml', 'Cargo.toml', 'scripts/gen-idl.mjs', '.github/workflows/program.yml']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      SOLANA_VERSION: v2.1.21
+      ANCHOR_VERSION: 0.31.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Install Solana CLI
+        run: |
+          sh -c "$(curl -sSfL https://release.anza.xyz/${SOLANA_VERSION}/install)"
+          echo "$HOME/.local/share/solana/install/active_release/bin" >> "$GITHUB_PATH"
+      - name: Install Anchor CLI
+        run: cargo install --git https://github.com/coral-xyz/anchor --tag v${ANCHOR_VERSION} anchor-cli --locked
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Wallet for the test provider (CI only)
+        run: mkdir -p ~/.config/solana && solana-keygen new --no-bip39-passphrase -s -o ~/.config/solana/id.json
+      - run: cargo test -p sl0t --lib
+      - run: anchor build
+      - name: Generated IDL must match the compiler's
+        run: |
+          node scripts/gen-idl.mjs
+          node -e '
+            const a=require("./target/idl/sl0t.json"), b=require("./tests/idl/sl0t.json");
+            const sig=i=>JSON.stringify({ix:i.instructions.map(x=>[x.name,x.discriminator,x.accounts.map(y=>y.name),x.args]),acc:i.accounts,ev:i.events,err:i.errors,ty:i.types});
+            if (sig(a)!==sig(b)) { console.error("IDL drift: update scripts/gen-idl.mjs"); process.exit(1) }'
+        continue-on-error: true
+      - run: pnpm idl:sync
+      - run: anchor test --skip-build --skip-local-validator --skip-deploy
