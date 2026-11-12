@@ -152,7 +152,6 @@ p { margin: 0; }
 .chip.hit { color: var(--hit); background: #3dff9a12; }
 .chip.miss { color: var(--miss); background: #ff2e4d14; }
 .chip.void { color: var(--grey); background: #ffffff08; }
-.chip.demo { color: var(--pink); background: #ff4fd812; }
 .chip.amber { color: #ffb020; background: #ffb02014; }
 .chip.rematch { color: #12060a; background: var(--gold); border-color: var(--gold); box-shadow: var(--glow-gold); }
 .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
@@ -240,7 +239,6 @@ p { margin: 0; }
 }
 
 /* banners */
-.demo-banner { background: repeating-linear-gradient(-45deg, #ff4fd814 0 12px, transparent 12px 24px), #120f17; border-bottom: 1px solid #ff4fd844; color: var(--pink); text-align: center; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.14em; padding: 8px var(--gutter); }
 
 /* ================================================================ sections */
 .section { padding: clamp(56px, 8vw, 100px) 0; position: relative; }

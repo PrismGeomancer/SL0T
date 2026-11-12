@@ -1,7 +1,7 @@
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { useEffect, useRef, useState } from 'react';
-import { CONFIG, DEMO, IS_DEVNET, programSourceUrl } from '../config';
+import { CONFIG, IS_DEVNET, programSourceUrl } from '../config';
 import { short } from '../lib/format';
 import { useGuestStatus, useRoute } from '../lib/hooks';
 import { toast, useStore } from '../lib/store';
@@ -180,11 +180,6 @@ export function Nav() {
       </div>
     </header>
   );
-}
-
-export function DemoBanner() {
-  if (!DEMO) return null;
-  return <div className="demo-banner">DEMO FLOOR — sample launches, not real coins.</div>;
 }
 
 export function Footer() {

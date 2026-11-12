@@ -9,9 +9,6 @@ export function StatusChip({ state }: { state: LaunchState }) {
   return <span className={`chip ${state}`}>{CHIP[state]}</span>;
 }
 
-export function DemoChip({ show = true }: { show?: boolean }) {
-  return show ? <span className="chip demo">DEMO</span> : null;
-}
 
 export function CurveBar({ bps, complete, label }: { bps: number; complete: boolean; label?: ReactNode }) {
   return (

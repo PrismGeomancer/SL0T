@@ -1,6 +1,6 @@
 import { sol } from '../lib/format';
 import type { LaunchRow } from '../lib/types';
-import { CardCountdown, CoinImage, coinName, coinTicker, CurveBar, DemoChip, StatusChip } from './ui';
+import { CardCountdown, CoinImage, coinName, coinTicker, CurveBar, StatusChip } from './ui';
 
 export function LaunchCard({ launch }: { launch: LaunchRow }) {
   return (
@@ -13,7 +13,6 @@ export function LaunchCard({ launch }: { launch: LaunchRow }) {
         </div>
         <div className="lcard-chips">
           <StatusChip state={launch.state} />
-          <DemoChip show={!!launch.demo} />
         </div>
       </div>
       <CurveBar bps={launch.curvePctBps} complete={launch.curveComplete} />

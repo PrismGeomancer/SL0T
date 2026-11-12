@@ -21,7 +21,7 @@ function Ticker({ launches }: { launches: LaunchRow[] | null }) {
   }, [launches]);
   const items = Array.from({ length: 6 }, (_, i) => (
     <span key={i} aria-hidden={i > 0}>
-      {text ?? ' '} {DEMO && text ? <b>· DEMO</b> : null}
+      {text ?? ' '}
     </span>
   ));
   return (
@@ -350,11 +350,11 @@ function Resolved({ cfg }: { cfg: ChainConfig | null }) {
         <div className="panel kv">
           <div>
             <span>Keeper</span>
-            <span>{keeper || (DEMO ? 'demo' : '…')}</span>
+            <span>{keeper || '…'}</span>
           </div>
           <div>
             <span>Program</span>
-            <span>{CONFIG.programId || 'not deployed yet (demo)'}</span>
+            <span>{CONFIG.programId || 'not deployed yet'}</span>
           </div>
           <div>
             <span>Runs</span>

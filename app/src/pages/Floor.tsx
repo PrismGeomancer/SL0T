@@ -58,7 +58,7 @@ export default function Floor() {
             ))}
           </div>
         ) : filter === 'mine' ? (
-          <div className="empty">{DEMO ? 'Demo mode: connect on the live floor to see your pulls.' : "You haven't pulled yet."}</div>
+          <div className="empty">{DEMO ? 'Nothing here yet.' : "You haven't pulled yet."}</div>
         ) : (
           <div className="empty">No coins on the floor yet. Somebody has to go first.</div>
         )}

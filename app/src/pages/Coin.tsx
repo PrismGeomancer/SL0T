@@ -3,7 +3,7 @@ import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { PublicKey } from '@solana/web3.js';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ResolveOverlay } from '../components/ResolveOverlay';
-import { CoinImage, coinName, coinTicker, CurveBar, DemoChip, pumpUrl, ResolveCountdown, solscan, SplitBar, StatusChip } from '../components/ui';
+import { CoinImage, coinName, coinTicker, CurveBar, pumpUrl, ResolveCountdown, solscan, SplitBar, StatusChip } from '../components/ui';
 import { DEMO } from '../config';
 import { fetchStake } from '../lib/chain';
 import { friendlyError } from '../lib/errors';
@@ -85,7 +85,7 @@ function CoinView({ launch }: { launch: LaunchRow }) {
   const outcome = stake ? stakeOutcome(stake, launch) : null;
 
   const lock = async () => {
-    if (DEMO) return toast('Demo mode: no program is configured yet, so nothing is locked.', 'info');
+    if (DEMO) return toast("SL0T isn't live yet, so nothing was locked.", 'info');
     if (!anchorWallet) return setVisible(true);
     if (guest !== 'friend') return toast('This floor is guest list only.', 'err');
     if (!stakesOpen) return toast('Stakes on this coin are closed.', 'err');
@@ -146,7 +146,6 @@ function CoinView({ launch }: { launch: LaunchRow }) {
             <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
               <span className="mono" style={{ color: 'var(--muted)' }}>${ticker}</span>
               <StatusChip state={launch.state} />
-              <DemoChip show={!!launch.demo} />
               <ResolveCountdown launch={launch} />
             </div>
           </div>
@@ -244,7 +243,7 @@ function CoinView({ launch }: { launch: LaunchRow }) {
               {!wallet.publicKey ? (
                 <p className="muted">Connect a wallet to see your position.</p>
               ) : !stake ? (
-                <p className="muted">{DEMO ? 'Demo mode: no positions.' : 'No position on this coin.'}</p>
+                <p className="muted">{DEMO ? 'No positions yet.' : 'No position on this coin.'}</p>
               ) : outcome?.kind === 'pending' ? (
                 <p className="lede">
                   You have {sol(stake.amount)} SOL on {stake.side.toUpperCase()}

@@ -67,7 +67,7 @@ export default function Me() {
           </h1>
         </div>
         {DEMO ? (
-          <div className="empty">Demo mode: your pulls show up here once the program is live.</div>
+          <div className="empty">Your pulls show up here once the floor is live.</div>
         ) : !publicKey ? (
           <div className="panel gate">
             <p className="lede">Connect a wallet to see your pulls.</p>

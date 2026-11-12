@@ -100,7 +100,7 @@ export default function Launch() {
   const submit = async () => {
     setTouched(true);
     if (DEMO) {
-      toast('Demo mode: no program is configured yet, so nothing is launched or charged.', 'info');
+      toast("SL0T isn't live yet, so nothing was launched or charged.", 'info');
       return;
     }
     if (!wallet.publicKey || !anchorWallet) return setVisible(true);
@@ -282,7 +282,6 @@ export default function Launch() {
                   </button>
                 </>
               )}
-              {DEMO && <p className="small">Demo mode: the lever works, nothing is sent.</p>}
             </div>
           </div>
         </form>

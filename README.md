@@ -94,7 +94,7 @@ GitHub Actions (`keeper.yml`, every 15 min plus a manual run button) needs:
 |---|---|---|
 | `cluster` | var `CLUSTER` | `devnet` / `mainnet-beta` |
 | `rpcUrl` | secret `VITE_RPC_URL` | your Helius URL |
-| `programId` | var `PROGRAM_ID` | **empty = demo mode** (6 sample launches, all labelled DEMO, no writes) |
+| `programId` | var `PROGRAM_ID` | **empty = demo mode** (6 sample launches, no labels, no writes (a write attempt toasts "SL0T isn't live yet")) |
 | `keeperAddress` | var `KEEPER_ADDRESS` | shown in "Who calls it?" |
 | `links.github` | automatic | repo URL; empty links hide their buttons |
 

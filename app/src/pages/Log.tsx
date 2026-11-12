@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { DemoChip, solscan } from '../components/ui';
+import { solscan } from '../components/ui';
 import { DEMO } from '../config';
 import { clock, pct, short, sol } from '../lib/format';
 import { friendlyError } from '../lib/errors';
@@ -47,9 +47,7 @@ export function LogTable({ rows, coinFor, compact = false }: { rows: LogRow[]; c
                   <a href={solscan.tx(r.sig)} target="_blank" rel="noreferrer">
                     {short(r.sig, 5)}
                   </a>
-                ) : (
-                  <DemoChip />
-                )}
+                ) : null}
               </td>
             </tr>
           ))}

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { DemoBanner, Footer, Nav, Toasts, WalletToasts } from './components/Chrome';
+import { Footer, Nav, Toasts, WalletToasts } from './components/Chrome';
 import { Intro, introMode } from './components/Intro';
 import { NeonFilterDefs } from './components/NeonLogo';
 import { useReducedMotion, useRoute } from './lib/hooks';
@@ -58,7 +58,6 @@ export function App() {
         Skip to content
       </a>
       <NeonFilterDefs />
-      <DemoBanner />
       <Nav />
       <Suspense fallback={<main className="page wrap" id="main" />}>
         <Page route={route} />
