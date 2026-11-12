@@ -21,7 +21,6 @@ export const CONFIG = {
   links: {
     x: '',
     github: pick('', env.VITE_REPO_URL),
-    telegram: '',
   },
   feeLine: "pump.fun's standard trading fees apply, and the creator fees go to the coin's creator as usual",
 };

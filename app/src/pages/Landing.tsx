@@ -85,10 +85,13 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
     void Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
       gsap.registerPlugin(ScrollTrigger);
       const st = ScrollTrigger.create({
-        trigger: section.current!.querySelector('.how-pin')!,
+        trigger: section.current!.querySelector('.how-stage')!,
         start: 'top top',
         end: '+=220%',
         pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
         scrub: true,
         onUpdate: (self) => {
           const i = Math.min(2, Math.floor(self.progress * 3));
@@ -98,7 +101,23 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
           }
         },
       });
-      kill = () => st.kill();
+      // content above/below the pin (ticker, launches, fonts) changes the page height after load:
+      // re-measure, or the pin spacer is the wrong size and part of the page renders empty.
+      let t = 0;
+      const refresh = () => {
+        window.clearTimeout(t);
+        t = window.setTimeout(() => ScrollTrigger.refresh(), 150);
+      };
+      const ro = new ResizeObserver(refresh);
+      ro.observe(document.body);
+      void document.fonts?.ready.then(refresh);
+      window.addEventListener('load', refresh);
+      kill = () => {
+        window.clearTimeout(t);
+        ro.disconnect();
+        window.removeEventListener('load', refresh);
+        st.kill();
+      };
     });
     return () => kill();
   }, [pinned]);
@@ -154,6 +173,7 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
 
   return (
     <section id="how" ref={section} className={`section how ${pinned ? '' : 'static'}`} aria-labelledby="how-h" style={pinned ? { paddingTop: 0, paddingBottom: 0 } : undefined}>
+      <div className="how-stage">
       <div className="wrap how-pin">
         <div>
           <div className="section-head">
@@ -181,6 +201,7 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );
