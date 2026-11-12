@@ -18,8 +18,8 @@
   --f-ui: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --f-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  --glow-red: 0 0 2px #fff3, 0 0 6px var(--red), 0 0 14px var(--red), 0 0 32px #ff2e4d99, 0 0 64px #ff2e4d55;
-  --glow-gold: 0 0 2px #fff4, 0 0 6px var(--gold), 0 0 16px #ffc24bcc, 0 0 36px #ffc24b66;
+  --glow-red: 0 0 2px #fff3, 0 0 8px var(--red), 0 0 22px #ff2e4daa, 0 0 40px #ff2e4d55;
+  --glow-gold: 0 0 2px #fff4, 0 0 8px var(--gold), 0 0 22px #ffc24b88;
   --glow-green: 0 0 4px var(--hit), 0 0 14px #3dff9a99, 0 0 30px #3dff9a44;
 
   --ease-mech: cubic-bezier(0.2, 0.9, 0.25, 1);
@@ -192,9 +192,7 @@ p { margin: 0; }
 .nav {
   position: sticky; top: 0; z-index: 50;
   height: var(--nav-h);
-  background: linear-gradient(180deg, #07060af0, #07060ac8);
-  -webkit-backdrop-filter: blur(14px) saturate(1.3);
-  backdrop-filter: blur(14px) saturate(1.3);
+  background: linear-gradient(180deg, #07060a, #07060af2);
 }
 .nav::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, #ff2e4d88 20%, #ffc24baa 50%, #ff2e4d88 80%, transparent); opacity: 0.55; }
 .nav .wrap { height: 100%; display: flex; align-items: center; gap: 16px; }
