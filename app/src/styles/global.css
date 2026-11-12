@@ -245,7 +245,7 @@ p { margin: 0; }
 .demo-banner { background: repeating-linear-gradient(-45deg, #ff4fd814 0 12px, transparent 12px 24px), #120f17; border-bottom: 1px solid #ff4fd844; color: var(--pink); text-align: center; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.14em; padding: 8px var(--gutter); }
 
 /* ================================================================ sections */
-.section { padding: clamp(72px, 11vw, 140px) 0; position: relative; }
+.section { padding: clamp(56px, 8vw, 100px) 0; position: relative; }
 .section-head { display: grid; gap: 16px; margin-bottom: clamp(32px, 5vw, 56px); }
 .section-head.center { text-align: center; justify-items: center; }
 
@@ -273,8 +273,13 @@ p { margin: 0; }
 
 /* how it works */
 .how { position: relative; }
-.how-stage { width: 100%; background: var(--bg); }
-.how-pin { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(24px, 5vw, 72px); align-items: center; min-height: 100svh; padding-block: calc(var(--nav-h) + 20px) 40px; }
+.how-stage { position: relative; width: 100%; background: radial-gradient(ellipse 60% 55% at 28% 55%, #ff2e4d1c, transparent 70%), radial-gradient(ellipse 50% 45% at 78% 50%, #ffc24b12, transparent 70%), var(--bg); }
+.how-rail { position: absolute; left: 0; right: 0; bottom: clamp(24px, 6vh, 56px); display: flex; justify-content: center; gap: clamp(24px, 6vw, 80px); list-style: none; margin: 0; padding: 0; }
+.how-rail li { display: grid; justify-items: center; gap: 4px; color: #5d5566; font-family: var(--f-mono); letter-spacing: 0.2em; font-size: 11px; text-transform: uppercase; transition: color 300ms, text-shadow 300ms; }
+.how-rail b { font-family: var(--f-display); font-weight: 400; font-size: clamp(34px, 4vw, 52px); letter-spacing: 0.02em; line-height: 1; }
+.how-rail li.done { color: #8a6a2a; }
+.how-rail li.on { color: var(--gold); text-shadow: var(--glow-gold); }
+.how-pin { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(24px, 5vw, 72px); align-items: center; min-height: 100svh; padding-block: calc(var(--nav-h) + 20px) calc(var(--nav-h) + 20px); }
 .how-reels { position: relative; }
 .how-panels { position: relative; min-height: 440px; }
 .how-panel { position: absolute; inset: 0; display: grid; gap: 16px; align-content: center; opacity: 0; transform: translateY(24px); transition: opacity 300ms var(--ease-mech), transform 300ms var(--ease-mech); }

@@ -87,7 +87,7 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
       const st = ScrollTrigger.create({
         trigger: section.current!.querySelector('.how-stage')!,
         start: 'top top',
-        end: '+=220%',
+        end: '+=140%',
         pin: true,
         pinSpacing: true,
         anticipatePin: 1,
@@ -174,6 +174,16 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
   return (
     <section id="how" ref={section} className={`section how ${pinned ? '' : 'static'}`} aria-labelledby="how-h" style={pinned ? { paddingTop: 0, paddingBottom: 0 } : undefined}>
       <div className="how-stage">
+        {pinned && (
+          <ol className="how-rail" aria-hidden>
+            {['Pull', 'Spin', 'Again'].map((l, i) => (
+              <li key={l} className={i === active ? 'on' : i < active ? 'done' : ''}>
+                <b>0{i + 1}</b>
+                <span>{l}</span>
+              </li>
+            ))}
+          </ol>
+        )}
       <div className="wrap how-pin">
         <div>
           <div className="section-head">
@@ -184,7 +194,7 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
           {pinned && (
             <div className="how-reels">
               <BulbBorder spacing={26}>
-                <Reels ref={reels} height={130} initial={PANEL_REELS[0]} label="One reel turns per step" />
+                <Reels ref={reels} height={170} initial={PANEL_REELS[0]} label="One reel turns per step" />
               </BulbBorder>
               <div className="how-dots" aria-hidden>
                 {[0, 1, 2].map((i) => (
