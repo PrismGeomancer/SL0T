@@ -20,7 +20,9 @@ export const DEMO_CONFIG: ChainConfig = {
   paused: false,
 };
 
-const fakeKey = (n: number) => `DEMo${String(n).padStart(2, '0')}${'x'.repeat(36)}`.slice(0, 44);
+const B58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+// plausible-looking placeholder addresses, deterministic per index
+const fakeKey = (n: number) => Array.from({ length: 44 }, (_, i) => B58[(n * 31 + i * 17 + ((i * i * (n + 3)) % 29)) % B58.length]).join('');
 
 function demo(
   n: number,
