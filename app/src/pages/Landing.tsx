@@ -82,7 +82,11 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
   useEffect(() => {
     if (!pinned || !section.current) return;
     let kill = () => {};
+    // StrictMode (dev) mounts, unmounts and remounts before the async import resolves: without this guard
+    // the first run still creates its ScrollTrigger and the section gets pinned twice.
+    let cancelled = false;
     void Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([{ gsap }, { ScrollTrigger }]) => {
+      if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
       const st = ScrollTrigger.create({
         trigger: section.current!.querySelector('.how-stage')!,
@@ -119,7 +123,10 @@ function HowItWorks({ cfg }: { cfg: ChainConfig | null }) {
         st.kill();
       };
     });
-    return () => kill();
+    return () => {
+      cancelled = true;
+      kill();
+    };
   }, [pinned]);
 
   // each panel turns one reel
@@ -401,7 +408,9 @@ export function Landing() {
   useEffect(() => {
     if (reduced || !desktop) return;
     let destroy = () => {};
+    let cancelled = false;
     void Promise.all([import('lenis'), import('gsap'), import('gsap/ScrollTrigger')]).then(([{ default: Lenis }, { gsap }, { ScrollTrigger }]) => {
+      if (cancelled) return;
       gsap.registerPlugin(ScrollTrigger);
       const lenis = new Lenis({ duration: 1.05, smoothWheel: true });
       lenis.on('scroll', ScrollTrigger.update);
@@ -413,7 +422,10 @@ export function Landing() {
         lenis.destroy();
       };
     });
-    return () => destroy();
+    return () => {
+      cancelled = true;
+      destroy();
+    };
   }, [reduced, desktop]);
 
   return (
