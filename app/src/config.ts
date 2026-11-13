@@ -19,7 +19,7 @@ export const CONFIG = {
   programId: pick('', env.VITE_PROGRAM_ID),
   keeperAddress: pick('', env.VITE_KEEPER_ADDRESS),
   links: {
-    x: '',
+    x: 'https://x.com/SL0T_LAUNCH',
     github: '',
   },
   feeLine: "pump.fun's standard trading fees apply, and the creator fees go to the coin's creator as usual",
