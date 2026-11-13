@@ -1,11 +1,10 @@
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWalletModal } from '@solana/wallet-adapter-react-ui';
 import { useEffect, useRef, useState } from 'react';
-import { CONFIG, IS_DEVNET, programSourceUrl } from '../config';
+import { CONFIG, IS_DEVNET } from '../config';
 import { short } from '../lib/format';
 import { useGuestStatus, useRoute } from '../lib/hooks';
 import { toast, useStore } from '../lib/store';
-import { solscan } from './ui';
 
 const base = import.meta.env.BASE_URL;
 
@@ -183,9 +182,6 @@ export function Nav() {
 }
 
 export function Footer() {
-  const prog = CONFIG.programId
-    ? solscan.account(CONFIG.programId)
-    : programSourceUrl();
   return (
     <footer className='footer'>
       <div className='wrap'>
@@ -193,23 +189,6 @@ export function Footer() {
           <p style={{ fontFamily: 'var(--f-display)', fontSize: 18 }}>
             SL0T — every launch is <span className='accent'>a pull.</span>
           </p>
-          <div className='footer-links'>
-            {CONFIG.links.x && (
-              <a href={CONFIG.links.x} target='_blank' rel='noreferrer'>
-                X
-              </a>
-            )}
-            {CONFIG.links.github && (
-              <a href={CONFIG.links.github} target='_blank' rel='noreferrer'>
-                GitHub
-              </a>
-            )}
-            {prog && (
-              <a href={prog} target='_blank' rel='noreferrer'>
-                Program
-              </a>
-            )}
-          </div>
         </div>
         <p className='small' style={{ maxWidth: '80ch' }}>
           A private project for friends. Not financial advice. Meme coins can

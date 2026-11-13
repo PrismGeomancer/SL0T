@@ -34,7 +34,6 @@ jobs:
           VITE_PROGRAM_ID: ${{ vars.PROGRAM_ID }}
           VITE_CLUSTER: ${{ vars.CLUSTER }}
           VITE_KEEPER_ADDRESS: ${{ vars.KEEPER_ADDRESS }}
-          VITE_REPO_URL: ${{ github.server_url }}/${{ github.repository }}
         run: pnpm -C app build
       - uses: actions/upload-pages-artifact@v3
         with:
