@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SL0T launch film</title>
+<meta name="viewport" content="width=1920, height=1080">
+<style>
+@font-face { font-family: 'Bungee'; src: url('./assets/fonts/bungee-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'Bungee Shade'; src: url('./assets/fonts/bungee-shade-latin-400-normal.woff2') format('woff2'); font-weight: 400; }
+@font-face { font-family: 'Space Grotesk'; src: url('./assets/fonts/space-grotesk-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+@font-face { font-family: 'Space Grotesk'; src: url('./assets/fonts/space-grotesk-latin-700-normal.woff2') format('woff2'); font-weight: 700; }
+@font-face { font-family: 'JetBrains Mono'; src: url('./assets/fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2'); font-weight: 500; }
+
+/* ACCENTS: gold = you act (pull, rematch, bulbs), green = HIT, red = MISS. Tokens are the site's own (app/src/styles/global.css). */
+:root {
+  --bg: #07060a; --surface: #120f17; --surface-2: #1a1520; --line: #2a2333;
+  --red: #ff2e4d; --gold: #ffc24b; --hit: #3dff9a; --text: #f4eee6; --muted: #a69daf; --grey: #7b7385;
+  --f-display: 'Bungee', 'Impact', sans-serif; --f-ui: 'Space Grotesk', system-ui, sans-serif; --f-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --glow-red: 0 0 2px #fff3, 0 0 8px var(--red), 0 0 22px #ff2e4daa, 0 0 40px #ff2e4d55;
+  --glow-gold: 0 0 2px #fff4, 0 0 8px var(--gold), 0 0 22px #ffc24b88;
+  --glow-green: 0 0 4px var(--hit), 0 0 14px #3dff9a99, 0 0 30px #3dff9a44;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #000; }
+#main { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--f-ui); }
+#gl { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; display: block; filter: blur(var(--b, 0px)) brightness(var(--br, 1)); }
+#vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 75% 70% at 50% 46%, transparent 52%, rgba(0,0,0,.72) 100%); }
+#grain { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .07; mix-blend-mode: overlay; pointer-events: none; }
+
+/* ---- the site's own components, native size; the camera does the magnifying ---- */
+.panel { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+.cardwrap { position: absolute; left: 0; top: 0; width: 440px; transform-origin: 50% 50%; }
+.card { position: relative; background: linear-gradient(180deg, #16121c, var(--surface)); border: 1px solid var(--line); border-radius: 14px; padding: 20px; box-shadow: 0 30px 80px #000c, 0 0 0 1px #ffc24b18; }
+.lcard { display: grid; gap: 14px; }
+.lcard-head { display: flex; gap: 12px; align-items: center; }
+.coin-img { width: 52px; height: 52px; border-radius: 50%; flex: none; display: block; }
+.lcard-name { font-weight: 700; font-size: 17px; line-height: 1.2; white-space: nowrap; }
+.lcard-tick { font-family: var(--f-mono); font-size: 15px; color: var(--muted); }
+.lcard-chips { margin-left: auto; position: relative; width: 124px; height: 26px; flex: none; }
+.lcard-chips .chip { position: absolute; right: 0; top: 0; }
+.chip { display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 999px; font-family: var(--f-mono); font-size: 13px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; border: 1px solid currentColor; white-space: nowrap; }
+.chip.open { color: var(--gold); background: #ffc24b14; }
+.chip.miss { color: var(--red); background: #ff2e4d14; }
+.chip.rematch { color: #12060a; background: var(--gold); border-color: var(--gold); box-shadow: var(--glow-gold); }
+.curve { display: grid; gap: 6px; }
+.small { font-size: 15px; color: var(--muted); }
+.mono { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#pD .small { font-size: 17px; }
+.curve-bar { height: 10px; border-radius: 5px; background: #0b0a0e; border: 1px solid var(--line); overflow: hidden; }
+.curve-bar > i { display: block; height: 100%; width: 1.5%; background: linear-gradient(90deg, #a87412, var(--gold)); box-shadow: 0 0 14px #ffc24b88; }
+.row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.pool-bar { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: #0b0a0e; border: 1px solid var(--line); }
+.pool-bar .h { background: linear-gradient(90deg, #1f8f55, var(--hit)); box-shadow: 0 0 16px #3dff9a66; }
+.pool-bar .m { background: linear-gradient(90deg, var(--red), #8f1528); }
+.btn { --c: var(--red); display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 999px; border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 14%, transparent); color: var(--text); font-family: var(--f-display); font-size: 15px; letter-spacing: .04em; white-space: nowrap; }
+.btn.gold { --c: var(--gold); } .btn.green { --c: var(--hit); }
+.btn.primary { background: var(--c); color: #12060a; border-color: var(--c); box-shadow: 0 0 26px #ff2e4d77; }
+.btn.gold.primary { color: #1a1000; box-shadow: 0 0 26px #ffc24b77; }
+.btn.green.primary { color: #021a0c; box-shadow: 0 0 26px #3dff9a66; }
+.btn.block { width: 100%; }
+.btn.ghost { --c: var(--line); background: transparent; }
+.toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.toggle .btn { min-height: 44px; }
+.lbl { font-family: var(--f-mono); font-size: 14px; letter-spacing: .16em; color: var(--gold); text-transform: uppercase; }
+.bigamt { font-family: var(--f-mono); font-size: 34px; font-weight: 500; color: var(--text); }
+
+/* ---- type ---- */
+.say { position: absolute; left: 0; width: 1920px; text-align: center; white-space: pre; font-family: var(--f-display); color: var(--text); letter-spacing: .01em; line-height: 1; text-shadow: 0 6px 40px #000c; }
+.say em { font-style: normal; }
+.gold-t { color: var(--gold); text-shadow: var(--glow-gold); }
+.red-t { color: var(--red); text-shadow: var(--glow-red); }
+.green-t { color: var(--hit); text-shadow: var(--glow-green); }
+
+#cursor { position: absolute; left: 0; top: 0; width: 28px; height: 36px; z-index: 5; filter: drop-shadow(0 4px 10px #000c); }
+</style>
+</head>
+<body>
+<div id="main">
+  <canvas id="gl"></canvas>
+
+  <!-- PROOF 1: the launch. The card is the site's floor card; the camera magnifies it ~3x -->
+  <section id="pB" class="panel">
+    <div id="enB" class="cardwrap" style="left:1020px;top:445px">
+      <div id="camB" class="cardwrap" style="left:0;top:0">
+        <div class="card lcard">
+          <div class="lcard-head">
+            <svg class="coin-img" viewBox="0 0 120 120"><defs><radialGradient id="gF" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="hsl(140 90% 55%)"/><stop offset="1" stop-color="hsl(140 70% 14%)"/></radialGradient></defs><rect width="120" height="120" fill="#120F17"/><circle cx="60" cy="60" r="52" fill="url(#gF)" stroke="#FFC24B" stroke-width="5"/><text x="60" y="71" font-family="Verdana" font-weight="700" font-size="26" text-anchor="middle" fill="#F4EEE6">FROG</text></svg>
+            <div><div class="lcard-name">Frog Of Wall Street</div><div class="lcard-tick">$FROG</div></div>
+            <div class="lcard-chips"><span id="chipB" class="chip open">SPINNING</span><span id="chipB2" class="chip miss">MISS</span></div>
+          </div>
+          <div class="curve">
+            <div class="row small"><span id="pctB">0% filled</span></div>
+            <div class="curve-bar"><i id="fillB"></i></div>
+          </div>
+          <div class="row"><span class="mono small">HIT 0.100 SOL · MISS 0.350 SOL</span><span id="clockB" class="mono small">24:00 left</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF 2: the rematch -->
+  <section id="pD" class="panel">
+    <div id="enD" class="cardwrap" style="left:420px;top:368px">
+      <div id="camD" class="cardwrap" style="left:0;top:0">
+        <div class="card" style="display:grid;gap:16px">
+          <div class="lcard-head">
+            <svg class="coin-img" viewBox="0 0 120 120"><defs><radialGradient id="gD" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="hsl(48 90% 55%)"/><stop offset="1" stop-color="hsl(48 70% 14%)"/></radialGradient></defs><rect width="120" height="120" fill="#120F17"/><circle cx="60" cy="60" r="52" fill="url(#gD)" stroke="#FFC24B" stroke-width="5"/><text x="60" y="71" font-family="Verdana" font-weight="700" font-size="26" text-anchor="middle" fill="#F4EEE6">DUCK</text></svg>
+            <div><div class="lcard-name">Duck Season</div><div class="lcard-tick">$DUCK</div></div>
+            <div class="lcard-chips" style="width:176px"><span class="chip rematch">REMATCH READY</span></div>
+          </div>
+          <div class="pool-bar"><div class="h" style="width:60%"></div><div class="m" style="width:40%"></div></div>
+          <div class="row"><span class="mono small" style="color:var(--hit)">HIT 0.600 SOL</span><span class="mono small" style="color:var(--red)">MISS 0.400 SOL</span></div>
+          <div class="toggle"><span class="btn green primary" style="min-height:44px">HIT</span><span class="btn ghost" style="min-height:44px;color:var(--grey)">MISS</span></div>
+          <div class="row"><span class="lbl">Rematch</span><span id="amtD" class="bigamt">0.100 SOL</span></div>
+          <span id="lockD" class="btn gold primary block">Lock 0.2 SOL on HIT</span>
+        </div>
+        <svg id="cursor" viewBox="0 0 28 36"><path d="M2 2 L2 28 L9 21.5 L14 33 L19 31 L14 19.5 L24 19.5 Z" fill="#fff" stroke="#07060a" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- words: they live on the floor under the machine -->
+  <div id="wLaunch" class="say" style="top:880px;font-size:112px">Launch a coin.</div>
+  <div id="wHit"    class="say" style="top:906px;font-size:112px">Hit or miss.</div>
+  <div id="wMiss"   class="say red-t" style="top:716px;font-size:280px">MISS.</div>
+  <div id="wRun"    class="say" style="top:850px;font-size:124px">Run it back.</div>
+  <div id="wHIT"    class="say green-t" style="top:640px;font-size:330px">HIT.</div>
+  <div id="wDuck"   class="say" style="top:960px;font-size:56px;font-family:var(--f-ui);font-weight:700">$DUCK graduated.</div>
+  <div id="claim" style="position:absolute;left:1370px;top:926px"><span class="btn green primary" style="min-height:86px;padding:0 44px;font-size:30px"><span id="claimTxt">Claim 0.000 SOL</span></span></div>
+  <div id="wTag"    class="say" style="top:812px;font-size:108px">Every launch is a pull.</div>
+  <div id="wSub"    class="say" style="top:960px;font-size:38px;font-family:var(--f-ui);font-weight:500;color:var(--muted)">A friends-only launchpad on Solana.</div>
+
+  <div id="vig"></div>
+  <svg id="grain" viewBox="0 0 1920 1080" preserveAspectRatio="none" aria-hidden="true"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="7"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+</div>
+
+<script src="./runtime/vendor/gsap.min.js"></script>
+<script src="./runtime/motion.js"></script>
+<script>
+const M = Motion.film({ fps: 30, duration: 20, width: 1920, height: 1080, clock: 'smooth' });
+const F = (n) => n / 30;
+
+/* ============================================================ shot map (frames) */
+const CUT = { proof1: 102, land: 232, close: 272, rematch: 322, knob2: 400, final: 528 };
+M.mark(CUT.close,  'cut', 'land -> close on window');
+M.mark(CUT.knob2,  'cut', 'press -> knob');
+M.mark(CUT.final,  'cut', '777 -> final');
+
+/* ============================================================ reel schedule (seconds) */
+const N = 8, STEP = Math.PI * 2 / N, TAU = Math.PI * 2;
+const angleFor = (idx) => (idx + 0.5) * STEP;
+const decel = (k) => { const c1 = 1.25, c3 = c1 + 1; return 1 + c3 * Math.pow(k - 1, 3) + c1 * Math.pow(k - 1, 2); };   // the site's own reel ease (overshoot + settle)
+const V = 15;                                   // rad/s while spinning (2.4 rev/s)
+const RAMP = 0.3;
+const spinDisp = (u) => (u <= 0 ? 0 : u < RAMP ? V * u * u / (2 * RAMP) : V * RAMP / 2 + V * (u - RAMP));
+const PULL1 = 0.98, PULL2 = 13.62;              // reels start (after the lever bottoms out)
+const START = [0, 2, 1];                        // 7 · cherry · BAR at rest (as on the site)
+const STOP1 = [{ t: 7.30, d: .70, idx: 0 }, { t: 7.70, d: .70, idx: 2 }, { t: 8.10, d: .75, idx: 1 }];   // MISS: 7 · cherry · BAR
+const STOP2 = [{ t: 14.45, d: .60, idx: 0 }, { t: 14.85, d: .65, idx: 0 }, { t: 15.25, d: .75, idx: 0 }]; // HIT: 7 · 7 · 7
+function plan(i) {
+  const A0 = angleFor(START[i]);
+  const s1 = STOP1[i], th1 = A0 + spinDisp(s1.t - PULL1);
+  const m1 = Math.round((th1 + V * s1.d / 4.25 - angleFor(s1.idx)) / TAU), T1 = angleFor(s1.idx) + TAU * m1;
+  const s2 = STOP2[i], th2 = T1 + spinDisp(s2.t - PULL2);
+  const m2 = Math.round((th2 + V * s2.d / 4.25 - angleFor(s2.idx)) / TAU), T2 = angleFor(s2.idx) + TAU * m2;
+  return { A0, th1, T1, th2, T2, s1, s2 };
+}
+const PLANS = [0, 1, 2].map(plan);
+function reelTheta(i, t) {
+  const p = PLANS[i];
+  if (t < PULL1) return p.A0;
+  if (t < p.s1.t) return p.A0 + spinDisp(t - PULL1);
+  if (t < p.s1.t + p.s1.d) return p.th1 + (p.T1 - p.th1) * decel((t - p.s1.t) / p.s1.d);
+  if (t < PULL2) return p.T1;
+  if (t < p.s2.t) return p.T1 + spinDisp(t - PULL2);
+  if (t < p.s2.t + p.s2.d) return p.th2 + (p.T2 - p.th2) * decel((t - p.s2.t) / p.s2.d);
+  return p.T2;
+}
+const reelSpeed = (i, t) => Math.abs(reelTheta(i, t + 0.01) - reelTheta(i, t - 0.01)) / 0.02;
+
+/* the lever: anticipation, snap down 160 ms, spring back (the site's own motion) */
+function leverAngle(t) {
+  let a = 0;
+  for (const tp of [0.9, 13.5]) {
+    const k = t - tp;
+    if (k > -0.14 && k < 0) a += -0.16 * Math.sin((k + 0.14) / 0.14 * Math.PI * 0.5);
+    else if (k >= 0 && k < 0.16) a += -0.16 * 0 + (k / 0.16) * 1.0 * (1 - 0) ;
+    else if (k >= 0.16 && k < 1.4) a += Math.exp(-(k - 0.16) * 7) * Math.cos((k - 0.16) * 18);
+  }
+  return a;
+}
+
+/* bulbs */
+const POP_T = 8.86, POP_BULB = 9;
+const clamp01 = (x) => Math.max(0, Math.min(1, x));
+function bulbLevel(i, t) {
+  const chase = (rate, hi, lo) => ((i % 3) === (Math.floor(t * rate) % 3) ? hi : lo);
+  if (i === POP_BULB && t >= POP_T && t < 16.0) return t < POP_T + 0.07 ? 9 : 0;
+  if (t < 0.9) return chase(3, 1.8, .25);
+  if (t < 7.3) return chase(11, 2.2, .25);
+  if (t < 8.86) return chase(5, 2.0, .25);
+  if (t < 13.5) return t < 9.4 ? 0.12 : chase(1.3, .55, .08);               // the room sags after a miss
+  if (t < 14.45) return chase(13, 2.4, .25);
+  if (t < 16.0) return chase(16, 2.4, .35);
+  if (t < 16.62) return (Math.floor((t - 16.0) * 14) % 2 === 0) ? 3.2 : .3;  // the whole floor blinks on a hit
+  return chase(6, 2.6, .55);
+}
+const redGlowAt = (t) => (t < 8.86 ? 3.5 : t < 13.5 ? 0.9 + 0.5 * clamp01((t - 9.4) / 1) : t < 16 ? 3.8 : 6.0);
+const exposureAt = (t) => {
+  if (t < 8.86) return 1.0;
+  if (t < 9.0) return 1.0 - 0.5 * ((t - 8.86) / 0.14);
+  if (t < 13.4) return 0.5 + 0.2 * clamp01((t - 9.0) / 3);
+  if (t < 16.0) return 0.95;
+  if (t < 16.12) return 0.95 + 0.4 * ((t - 16.0) / 0.12);
+  return 1.35 - 0.3 * clamp01((t - 16.12) / 0.9);
+};
+
+/* marquee letters: S L 0 T. The 0 flickers twice in the end shot, then holds. */
+function marqueeOn(letter, t) {
+  if (t >= 8.86 && t < 9.1 && letter === 2) return 0.3;
+  if (t >= 17.75 && letter === 2) { const u = t - 17.75; if (u < 0.06) return 0; if (u < 0.14) return 1; if (u < 0.2) return 0.05; if (u < 0.3) return 1; if (u < 0.36) return 0.1; }
+  return 1;
+}
+
+/* ============================================================ camera (per shot, world units) */
+const shake = (t, t0, amp, dur) => { const u = t - t0; if (u < 0 || u > dur) return [0, 0, 0]; const a = amp * Math.exp(-u * 8); return [Math.sin(u * 71) * a, Math.cos(u * 57) * a, Math.sin(u * 43) * a * .5]; };
+function camAt(t, key) { const c = camAt0(t, key); const sh = [[8.86, .07, .5], [16.0, .12, .6], [13.66, .05, .4], [1.06, .04, .4], [7.3 + 0.7, .015, .25], [7.7 + 0.7, .015, .25]].reduce((a, e) => { const q = shake(t, e[0], e[1], e[2]); return [a[0] + q[0], a[1] + q[1], a[2] + q[2]]; }, [0, 0, 0]);
+  return { position: [c.position[0] + sh[0], c.position[1] + sh[1], c.position[2] + sh[2]], target: [c.target[0] + sh[0] * .5, c.target[1] + sh[1] * .5, c.target[2]], fov: c.fov }; }
+function camAt0(t, key) {
+  const f = t * 30;
+  if (f < CUT.proof1) {
+    // side profile of the knob, then the whip back to the front
+    const p = key(t, [[0, [2.95, 1.35, 2.5]], [1.05, [2.8, 1.3, 2.4], 'cruise'], [1.5, [2.0, 1.2, 6.2], 'whip'], [2.4, [0.7, 1.0, 8.6], 'glide'], [3.4, [0.4, 0.95, 7.9], 'cruise']]);
+    const g = key(t, [[0, [1.9, 1.7, 0.35]], [1.05, [1.9, 1.5, 0.35], 'cruise'], [1.5, [0.9, 0.9, 0.2], 'whip'], [2.4, [0, 0.85, 0], 'glide']]);
+    const fov = key(t, [[0, 24], [1.05, 24, 'cruise'], [1.5, 30, 'whip']]);
+    return { position: p, target: g, fov };
+  }
+  if (f < CUT.land) {  // machine left of frame, defocused by CSS; slow lateral drift
+    const u = t - F(CUT.proof1);
+    return { position: key(u, [[0, [2.4, 1.0, 10.8]], [4.4, [1.9, 0.9, 10.2], 'cruise']]), target: [2.9, 0.5, 0], fov: 30 };
+  }
+  if (f < CUT.close) {
+    const u = t - F(CUT.land);
+    return { position: key(u, [[0, [0.8, 0.85, 6.6]], [1.35, [0.4, 0.75, 5.5], 'cruise']]), target: [0, 0.3, 0.2], fov: 30 };
+  }
+  if (f < CUT.rematch) {
+    const u = t - F(CUT.close);
+    return { position: key(u, [[0, [0.6, 0.3, 6.1]], [1.7, [0.2, 0.25, 5.5], 'cruise']]), target: [0, -0.1, 0.9], fov: 28 };
+  }
+  if (f < CUT.knob2) {  // mirrored arrangement: machine on the right
+    const u = t - F(CUT.rematch);
+    return { position: key(u, [[0, [-2.4, 1.0, 10.8]], [2.6, [-1.9, 0.9, 10.2], 'cruise']]), target: [-2.9, 0.5, 0], fov: 30 };
+  }
+  if (f < CUT.final) {
+    const u = t - F(CUT.knob2);
+    // the same knob macro as the hook, then a shorter whip, then the push into the window as 777 lands
+    const p = key(u, [[0, [2.95, 1.35, 2.5]], [0.2, [2.9, 1.33, 2.45], 'cruise'], [0.6, [2.0, 1.2, 5.6], 'whip'], [1.3, [0.5, 0.8, 7.4], 'glide'], [2.6, [0.1, 0.4, 6.3], 'softInOut'], [3.8, [0.05, 0.35, 5.9], 'cruise']]);
+    const g = key(u, [[0, [1.9, 1.7, 0.35]], [0.2, [1.9, 1.55, 0.35], 'cruise'], [0.6, [0.9, 0.8, 0.2], 'whip'], [1.3, [0, 0.5, 0.2], 'glide'], [2.6, [0, -0.1, 0.9], 'softInOut']]);
+    const fov = key(u, [[0, 24], [0.2, 24, 'cruise'], [0.6, 30, 'whip'], [2.6, 28, 'softInOut']]);
+    return { position: p, target: g, fov };
+  }
+  const u = t - F(CUT.final);
+  return { position: key(u, [[0, [1.0, 0.9, 14.2]], [2.4, [0.3, 0.8, 13.0], 'glide']]), target: [0, -0.4, 0], fov: 30 };
+}
+
+/* ============================================================ the 3D scene */
+let H = null;                                   // handles filled by build
+function mulberry(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+async function buildScene(THREE, scene, camera, ctx) {
+  const { RoundedBoxGeometry } = await import('./runtime/hero3d/vendor/addons/geometries/RoundedBoxGeometry.js');
+  await Promise.all([document.fonts.load('400 220px "Bungee Shade"'), document.fonts.load('400 60px Bungee')]);
+  const SYM = ['7', 'BAR', 'cherry', '0', 'bell', '7', 'BAR', 'cherry'];
+
+  /* reel strip texture (the site's own symbols) and a directionally blurred twin for speed */
+  function reelCanvas() {
+    const cell = 256, c = document.createElement('canvas'); c.width = cell * N; c.height = 256;
+    const g = c.getContext('2d');
+    const grad = g.createLinearGradient(0, 0, 0, c.height); grad.addColorStop(0, '#d8d0c4'); grad.addColorStop(.5, '#fffaf1'); grad.addColorStop(1, '#d8d0c4');
+    g.fillStyle = grad; g.fillRect(0, 0, c.width, c.height);
+    SYM.forEach((s, i) => {
+      g.save(); g.translate(i * cell + cell / 2, 128); g.rotate(Math.PI / 2); g.textAlign = 'center'; g.textBaseline = 'middle';
+      if (s === '7') { const seven = new Path2D('M12 9h42v9L33 57H19l20-36H12z'); g.translate(-96, -96); g.scale(3, 3); g.translate(2, 3); g.fillStyle = '#7a0d1d'; g.fill(seven); g.translate(-2, -3); g.fillStyle = '#ff2e4d'; g.fill(seven); }
+      else if (s === 'BAR') { g.fillStyle = '#1a1520'; g.strokeStyle = '#ffc24b'; g.lineWidth = 10; g.beginPath(); g.roundRect(-96, -44, 192, 88, 14); g.fill(); g.stroke(); g.font = '400 60px Bungee, Impact, sans-serif'; g.fillStyle = '#fff'; g.fillText('BAR', 0, 4); }
+      else if (s === '0') { g.font = '400 180px Bungee, Impact, sans-serif'; g.fillStyle = '#1a1520'; g.fillText('0', 0, 6); }
+      else if (s === 'cherry') {
+        g.strokeStyle = '#2d7a2d'; g.lineWidth = 9; g.beginPath(); g.moveTo(0, -80); g.quadraticCurveTo(30, -30, 46, 10); g.moveTo(0, -80); g.quadraticCurveTo(-30, -20, -44, 20); g.stroke();
+        g.fillStyle = '#e0102f'; g.beginPath(); g.arc(-44, 40, 36, 0, TAU); g.fill(); g.fillStyle = '#ff2e4d'; g.beginPath(); g.arc(46, 30, 36, 0, TAU); g.fill();
+      } else { g.fillStyle = '#ffc24b'; g.strokeStyle = '#8a5a00'; g.lineWidth = 7; g.beginPath(); g.moveTo(0, -80); g.bezierCurveTo(-60, -80, -60, 0, -64, 40); g.lineTo(64, 40); g.bezierCurveTo(60, 0, 60, -80, 0, -80); g.fill(); g.stroke(); g.fillStyle = '#8a5a00'; g.beginPath(); g.arc(0, 60, 18, 0, TAU); g.fill(); }
+      g.restore();
+    });
+    return c;
+  }
+  const base = reelCanvas();
+  const blurC = document.createElement('canvas'); blurC.width = base.width; blurC.height = base.height;
+  { const g = blurC.getContext('2d'); g.fillStyle = '#000'; g.fillRect(0, 0, blurC.width, blurC.height); g.globalCompositeOperation = 'lighter'; const n = 31, span = 250; g.globalAlpha = 1 / n;
+    for (let k = 0; k < n; k++) { const off = (k / (n - 1) - .5) * span; for (const w of [-1, 0, 1]) g.drawImage(base, off + w * base.width, 0); } }
+  const mkTex = (c) => { const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; return t; };
+  const reelTex = mkTex(base), blurTex = mkTex(blurC);
+
+  /* marquee: redrawn from t (per-letter neon) */
+  const mq = document.createElement('canvas'); mq.width = 1024; mq.height = 300;
+  const mqTex = new THREE.CanvasTexture(mq); mqTex.colorSpace = THREE.SRGBColorSpace;
+  const mg = mq.getContext('2d'); mg.font = '400 220px "Bungee Shade", Bungee, Impact, sans-serif'; mg.textBaseline = 'middle';
+  const LET = ['S', 'L', '0', 'T'], widths = LET.map((l) => mg.measureText(l).width), totalW = widths.reduce((a, b) => a + b, 0);
+  function drawMarquee(t) {
+    mg.clearRect(0, 0, 1024, 300); mg.fillStyle = '#0b080d'; mg.fillRect(0, 0, 1024, 300);
+    mg.font = '400 220px "Bungee Shade", Bungee, Impact, sans-serif'; mg.textBaseline = 'middle'; mg.textAlign = 'left';
+    let x = 512 - totalW / 2;
+    LET.forEach((l, i) => {
+      const on = marqueeOn(i, t);
+      mg.shadowColor = '#ff2e4d'; mg.shadowBlur = 40 * on; mg.fillStyle = on > .5 ? '#ff2e4d' : '#3a1520'; mg.globalAlpha = 1; mg.fillText(l, x, 160);
+      mg.shadowBlur = 0; mg.fillStyle = '#ffd9df'; mg.globalAlpha = 0.5 * on; mg.fillText(l, x, 160); mg.globalAlpha = 1;
+      x += widths[i];
+    });
+    mqTex.needsUpdate = true;
+  }
+  drawMarquee(0);
+
+  /* shared materials */
+  const cabinetMat = new THREE.MeshStandardMaterial({ color: '#2b2233', metalness: .6, roughness: .3 });
+  const chromeMat = new THREE.MeshStandardMaterial({ color: '#d9d4de', metalness: 1, roughness: .18 });
+  const blackMat = new THREE.MeshStandardMaterial({ color: '#0a080c', metalness: .3, roughness: .6 });
+  const frameMat = new THREE.MeshStandardMaterial({ color: '#ffc24b', metalness: .9, roughness: .3, emissive: '#2a1a00', emissiveIntensity: .3 });
+  const reelMat = new THREE.MeshStandardMaterial({ map: reelTex, roughness: .45, metalness: .05 });
+  const blurMat = new THREE.MeshBasicMaterial({ map: blurTex, transparent: true, opacity: 0, depthWrite: false });
+  const sideMat = new THREE.MeshStandardMaterial({ color: '#2a2333', metalness: .6, roughness: .4 });
+  const mqMat = new THREE.MeshStandardMaterial({ map: mqTex, emissive: '#ffffff', emissiveMap: mqTex, emissiveIntensity: .95, roughness: .4 });
+  const knobMat = new THREE.MeshPhysicalMaterial({ color: '#d4102e', emissive: '#ff1f45', emissiveIntensity: .55, roughness: .16, clearcoat: 1, clearcoatRoughness: .04 });
+  const backingMat = new THREE.MeshStandardMaterial({ color: '#050406', roughness: .9 });
+  const glassMat = new THREE.MeshPhysicalMaterial({ color: '#ffffff', transparent: true, opacity: .08, roughness: .05, metalness: 0, clearcoat: 1, clearcoatRoughness: .05 });
+  const paylineMat = new THREE.MeshBasicMaterial({ color: '#ff2e4d', transparent: true, opacity: .7 });
+  const bulbGeo = new THREE.SphereGeometry(.05, 12, 12);
+  const bulbMats = [];
+  const reelGeo = new THREE.CylinderGeometry(.95, .95, .7, 64, 1, true), blurGeo = new THREE.CylinderGeometry(.958, .958, .7, 64, 1, true);
+
+  function makeMachine() {
+    const rig = new THREE.Group(), machine = new THREE.Group(); machine.position.y = -.2; rig.add(machine);
+    const add = (geo, mat, x, y, z) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); machine.add(m); return m; };
+    add(new RoundedBoxGeometry(3.2, 3.4, 1.6, 6, .16), cabinetMat, 0, 0, 0);
+    add(new RoundedBoxGeometry(3.4, 1.15, 1.7, 6, .2), cabinetMat, 0, 2.35, 0);
+    add(new THREE.PlaneGeometry(3.0, .88), mqMat, 0, 2.35, .86);
+    add(new RoundedBoxGeometry(2.6, .35, .7, 4, .1), blackMat, 0, -1.35, .95);
+    add(new RoundedBoxGeometry(3.5, .4, 1.9, 4, .12), blackMat, 0, -1.9, 0);
+    const FRONT = .8;
+    add(new THREE.PlaneGeometry(2.5, 1.36), backingMat, 0, .45, FRONT + .004);
+    const bar = (w, h, x, y) => add(new RoundedBoxGeometry(w, h, .16, 2, .03), frameMat, x, .45 + y, FRONT + .09);
+    bar(2.72, .12, 0, .74); bar(2.72, .12, 0, -.74); bar(.12, 1.6, -1.31, 0); bar(.12, 1.6, 1.31, 0); bar(.06, 1.36, -.4, 0); bar(.06, 1.36, .4, 0);
+    const reels = [], blurs = [];
+    for (let i = 0; i < 3; i++) {
+      const holder = new THREE.Group(); holder.position.set((i - 1) * .8, .45, FRONT - .95 + .15);
+      const reel = new THREE.Mesh(reelGeo, reelMat); reel.rotation.z = Math.PI / 2;
+      const blur = new THREE.Mesh(blurGeo, blurMat); blur.rotation.z = Math.PI / 2;
+      holder.add(reel, blur);
+      const capL = new THREE.Mesh(new THREE.CircleGeometry(.95, 48), sideMat); capL.position.x = -.37; capL.rotation.y = -Math.PI / 2;
+      const capR = capL.clone(); capR.position.x = .37; capR.rotation.y = Math.PI / 2; holder.add(capL, capR);
+      machine.add(holder); reels.push(reel); blurs.push(blur);
+    }
+    add(new THREE.PlaneGeometry(2.5, 1.36), glassMat, 0, .45, FRONT + .17);
+    add(new THREE.PlaneGeometry(2.5, .025), paylineMat, 0, .45, FRONT + .175);
+    let bi = 0;
+    const addBulb = (x, y, z) => { if (!bulbMats[bi]) bulbMats[bi] = new THREE.MeshStandardMaterial({ color: '#ffc24b', emissive: '#ffb020', emissiveIntensity: 2.4 }); add(bulbGeo, bulbMats[bi++], x, y, z); };
+    const ring = (cx, cy, w, h, z, n) => { const per = 2 * (w + h); for (let i = 0; i < n; i++) { let d = (i / n) * per, x, y; if (d < w) [x, y] = [-w / 2 + d, h / 2]; else if ((d -= w) < h) [x, y] = [w / 2, h / 2 - d]; else if ((d -= h) < w) [x, y] = [w / 2 - d, -h / 2]; else [x, y] = [-w / 2, -h / 2 + (d - w)]; addBulb(cx + x, cy + y, z); } };
+    ring(0, 2.35, 3.2, 1.0, .88, 30); ring(0, .45, 2.95, 1.85, FRONT + .12, 26);
+    const pivot = new THREE.Group(); pivot.position.set(1.78, .25, .1); machine.add(pivot);
+    const hub = new THREE.Mesh(new THREE.CylinderGeometry(.2, .2, .25, 24), chromeMat); hub.rotation.z = Math.PI / 2; pivot.add(hub);
+    const arm = new THREE.Mesh(new THREE.CylinderGeometry(.05, .05, 1.6, 16), chromeMat); arm.position.set(.16, .8, 0); pivot.add(arm);
+    const knob = new THREE.Mesh(new THREE.SphereGeometry(.2, 48, 48), knobMat); knob.position.set(.16, 1.65, 0); pivot.add(knob);
+    rig.rotation.y = -0.18;
+    return { rig, reels, blurs, pivot };
+  }
+  const A = makeMachine();
+  const B = makeMachine(); B.rig.scale.y = -1; B.rig.position.y = -4.6;     // mirror image under the floor (floor y = -2.3)
+  scene.add(A.rig, B.rig);
+
+  /* floor: a dark sheet that lets the mirror image through near the machine and swallows it far away */
+  const fc = document.createElement('canvas'); fc.width = fc.height = 512; const fg = fc.getContext('2d');
+  const gr = fg.createRadialGradient(256, 256, 0, 256, 256, 256); gr.addColorStop(0, 'rgb(105,105,105)'); gr.addColorStop(.22, 'rgb(150,150,150)'); gr.addColorStop(.42, 'rgb(235,235,235)'); gr.addColorStop(.6, 'rgb(255,255,255)'); gr.addColorStop(.85, 'rgb(255,255,255)'); gr.addColorStop(1, 'rgb(255,255,255)'); fg.fillStyle = gr; fg.fillRect(0, 0, 512, 512);
+  const floorTex = new THREE.CanvasTexture(fc);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(26, 26), new THREE.MeshBasicMaterial({ color: '#07060a', alphaMap: floorTex, transparent: true, depthWrite: false }));
+  floor.rotation.x = -Math.PI / 2; floor.position.y = -2.3; scene.add(floor);
+  /* pool of red neon light on the floor */
+  const pc = document.createElement('canvas'); pc.width = pc.height = 256; const pg = pc.getContext('2d');
+  const pr = pg.createRadialGradient(128, 128, 0, 128, 128, 128); pr.addColorStop(0, 'rgba(255,46,77,0.42)'); pr.addColorStop(.25, 'rgba(255,46,77,0.24)'); pr.addColorStop(.5, 'rgba(255,46,77,0.09)'); pr.addColorStop(.75, 'rgba(255,46,77,0.025)'); pr.addColorStop(1, 'rgba(255,46,77,0)'); pg.fillStyle = pr; pg.fillRect(0, 0, 256, 256);
+  const poolMat = new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(pc), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
+  const pool = new THREE.Mesh(new THREE.PlaneGeometry(13, 9), poolMat); pool.rotation.x = -Math.PI / 2; pool.position.set(0, -2.29, 1.8); scene.add(pool);
+
+  /* red haze behind the machine */
+  const hz = document.createElement('canvas'); hz.width = hz.height = 256; const hg = hz.getContext('2d');
+  const hr = hg.createRadialGradient(128, 128, 0, 128, 128, 128); hr.addColorStop(0, 'rgba(255,255,255,0.8)'); hr.addColorStop(.35, 'rgba(255,255,255,0.2)'); hr.addColorStop(1, 'rgba(255,255,255,0)'); hg.fillStyle = hr; hg.fillRect(0, 0, 256, 256);
+  const hazeMat = new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(hz), color: '#ff2e4d', transparent: true, blending: THREE.AdditiveBlending, depthWrite: false, opacity: .5 });
+  const haze = new THREE.Sprite(hazeMat); haze.position.set(0, 1.2, -4.2); haze.scale.set(17, 9.5, 1); scene.add(haze);
+
+  /* lights (the site's rig) */
+  scene.add(new THREE.AmbientLight('#3b2c44', .9));
+  const key = new THREE.SpotLight('#ffe9d6', 22, 20, .5, .6, 1.2); key.position.set(4, 6, 6); scene.add(key);
+  const redGlow = new THREE.PointLight('#ff2e4d', 3.5, 6, 1.6); redGlow.position.set(0, 2.7, 1.8); scene.add(redGlow);
+  const rimL = new THREE.PointLight('#ffc24b', 4, 10, 1.4); rimL.position.set(-3, 1, -2); scene.add(rimL);
+  const edgeL = new THREE.DirectionalLight('#ff4f6d', 1.4); edgeL.position.set(-5, 3, -3); scene.add(edgeL);
+  const edgeR = new THREE.DirectionalLight('#ffd08a', 1.1); edgeR.position.set(5, 2, -2); scene.add(edgeR);
+  const winLight = new THREE.PointLight('#fff1d6', 0, 7, 1.5); winLight.position.set(0, .5, 2.4); scene.add(winLight);   // lights the reels when they land
+
+  /* gold dust in the air (positions are a function of t) */
+  const DN = 160, dpos = new Float32Array(DN * 3), dseed = []; { const r = mulberry(11); for (let i = 0; i < DN; i++) dseed.push([r() * 16 - 8, r() * 8 - 2.5, r() * 12 - 5, .15 + r() * .35, r() * 6]); }
+  const dgeo = new THREE.BufferGeometry(); dgeo.setAttribute('position', new THREE.BufferAttribute(dpos, 3));
+  const dust = new THREE.Points(dgeo, new THREE.PointsMaterial({ color: '#ffc24b', size: .045, transparent: true, opacity: .55, blending: THREE.AdditiveBlending, depthWrite: false })); dust.frustumCulled = false; scene.add(dust);
+
+  /* gold coins: a fountain out of the tray on the hit */
+  const coinGeo = new THREE.CylinderGeometry(.13, .13, .03, 28), coinMat = new THREE.MeshStandardMaterial({ color: '#ffc24b', metalness: .85, roughness: .3, emissive: '#a06800', emissiveIntensity: .9 });
+  const coins = []; { const r = mulberry(5); for (let i = 0; i < 64; i++) { const m = new THREE.Mesh(coinGeo, coinMat); m.visible = false; scene.add(m); coins.push({ m, vx: (r() - .5) * 4.6, vy: 5.2 + r() * 4.2, vz: .2 + r() * 1.1, d: r() * .7, sx: (r() - .5) * 6, sy: (r() - .5) * 6, sz: r() * 6 }); } }
+  const COIN_T = 15.95;
+
+  H = { A, B, bulbMats, blurMat, redGlow, key, haze, hazeMat, poolMat, winLight, dust, dpos, dseed, coins, COIN_T, drawMarquee, mqMat, knobMat };
+  return { rigA: A.rig, rigB: B.rig };
+}
+
+/* per-frame: every dynamic property is SET (never accumulated), so frame N is the same played or jumped to */
+function animate(t) {
+  if (!H) return;
+  for (let i = 0; i < 3; i++) {
+    const th = reelTheta(i, t);
+    H.A.reels[i].rotation.x = th; H.B.reels[i].rotation.x = th; H.A.blurs[i].rotation.x = th; H.B.blurs[i].rotation.x = th;
+  }
+  const sp = Math.max(reelSpeed(0, t), reelSpeed(1, t), reelSpeed(2, t));
+  H.blurMat.opacity = clamp01((sp - 3) / 6) * 0.9;
+  const la = leverAngle(t); H.A.pivot.rotation.x = la; H.B.pivot.rotation.x = la;
+  H.bulbMats.forEach((m, i) => { m.emissiveIntensity = bulbLevel(i, t); });
+  H.redGlow.intensity = redGlowAt(t) * (1 + 0.04 * Math.sin(t * 143));
+  H.winLight.intensity = t > 14.4 && t < 17.6 ? 2.6 : 0;
+  H.drawMarquee(t);
+  H.mqMat.emissiveIntensity = t >= 8.86 && t < 13.5 ? 0.55 : 0.95;
+  // haze: red; gold-green on the hit; low in the sag
+  const hazeCol = t < 16 ? [1, .18, .3] : [1, .62, .28];
+  H.hazeMat.color.setRGB(hazeCol[0], hazeCol[1], hazeCol[2]);
+  H.hazeMat.opacity = t < 8.86 ? .2 : t < 13.5 ? .08 : t < 16 ? .24 : .3;
+  H.poolMat.opacity = t < 8.86 ? 1 : t < 13.5 ? .3 : 1;
+  // dust
+  for (let i = 0; i < H.dseed.length; i++) { const s = H.dseed[i]; H.dpos[i * 3] = s[0] + Math.sin(t * .4 + s[4]) * .5; H.dpos[i * 3 + 1] = ((s[1] + 2.5 + t * s[3]) % 8) - 2.5; H.dpos[i * 3 + 2] = s[2]; }
+  H.dust.geometry.attributes.position.needsUpdate = true;
+  // coins
+  const G = 9.5;
+  H.coins.forEach((c) => {
+    const u = t - H.COIN_T - c.d;
+    if (u < 0 || u > 3.2) { c.m.visible = false; return; }
+    const x = 0 + c.vx * u, y = -1.5 + c.vy * u - 0.5 * G * u * u, z = 1.3 + c.vz * u;
+    if (y < -2.2) { c.m.visible = false; return; }
+    c.m.visible = true; c.m.position.set(x, y, z); c.m.rotation.set(c.sx * u, c.sy * u, c.sz * u);
+  });
+}
+
+const hero = M.hero3d('#gl', {
+  envMap: 'studio', envIntensity: 0.35, toneMapping: 'aces', exposure: 1,
+  key: false, rim: false,
+  bloom: { strength: 0.62, radius: 0.5, threshold: 0.85, clamp: 9 },
+  dof: { aperture: 0.0, maxblur: 0.012, focus: 2.2 },
+  camera: { fov: 30, position: [0.9, 0.9, 7.9], target: [0, 0.35, 0] },
+  build: buildScene,
+  state: (t, o, { key }) => {
+    animate(t);
+    const c = camAt(t, key);
+    const macro = (t < 1.5) || (t >= F(CUT.knob2) && t < F(CUT.knob2) + 0.7);
+    const kz = Math.hypot(c.position[0] - 1.95, c.position[1] - 1.6, c.position[2] - 0.3);
+    return { camera: c, exposure: exposureAt(t), aperture: macro ? 0.011 * (t < 1.0 || (t >= F(CUT.knob2) && t < F(CUT.knob2) + 0.25) ? 1 : 0.5) : 0, focus: kz };
+  },
+});
+
+/* ============================================================ UI, type, counters (HTML on the same clock) */
+const ACC_GOLD = '#ffc24b';
+
+// CSS blur + dim on the 3D layer behind the cards (focus is part of the grammar: card = near, machine = far)
+M.kf('#gl', '--b', [[0, 0], [31, 0], [38, 14], [48, 0], [CUT.proof1 - 1, 0], [CUT.proof1, 7], [CUT.land - 1, 7], [CUT.land, 0], [CUT.rematch - 1, 0], [CUT.rematch, 9], [CUT.knob2 - 1, 9], [CUT.knob2, 0], [408, 0], [414, 14], [424, 0]], { fmt: (v) => v + 'px', ease: 'cruise' });
+M.kf('#gl', '--br', [[0, 1], [CUT.proof1 - 1, 1], [CUT.proof1, .62], [CUT.land - 1, .62], [CUT.land, 1], [CUT.rematch - 1, 1], [CUT.rematch, .5], [CUT.knob2 - 1, .5], [CUT.knob2, 1]], { ease: 'cruise' });
+
+// hook words (they sit on the floor reflection)
+M.show('#wLaunch', 0, 52);   M.words('#wLaunch', { at: 4, mech: 'rise', dist: 70, gaps: [4, 4], smear: true, accent: { color: ACC_GOLD, frames: 22, word: -1 } });
+M.show('#wHit', 60, CUT.proof1);  M.words('#wHit', { at: 60, mech: 'rise', dist: 70, gaps: [5, 4, 6], smear: true, accent: { color: ACC_GOLD, frames: 22, word: -1 } });
+M.kf('#wLaunch', 'scale', [[4, 1], [52, 1.04]]); M.kf('#wHit', 'scale', [[60, 1], [CUT.proof1, 1.06, 'gentleIn']]);
+
+// PROOF 1: the card
+M.cut(CUT.proof1, { show: ['#pB'] }); M.hide('#pB', 0 + 0.0 * 1);
+M.show('#pB', CUT.proof1, CUT.land);
+M.kf('#camB', 'scale', [[0, 2.9], [CUT.land, 2.9]]);       // base magnification
+M.enter('#enB', { at: CUT.proof1, frames: 12, ease: 'softLand', from: { x: 1500, scale: 1.0, blur: 0 }, smear: { axis: 'x', px: 60, frames: 4 } });
+M.drift('#enB', { prop: 'scale', from: 1.0, to: 1.05, start: CUT.proof1 + 12, end: CUT.land });
+M.kf('#fillB', 'width', [[CUT.proof1 + 8, 1.5], [CUT.proof1 + 22, 18, 'softLand'], [CUT.proof1 + 52, 38], [CUT.proof1 + 90, 62, 'softLand'], [CUT.proof1 + 112, 71, 'glide'], [CUT.land, 71]], { fmt: (v) => v + '%' });
+M.count('#pctB', { at: CUT.proof1 + 8, from: 0, to: 71, frames: 104, round: true, format: (v) => v + '% filled', skip: 0.02, seed: 4 });
+M.count('#clockB', { at: CUT.proof1 + 10, from: 1440, to: 0, frames: 112, round: true, format: (v) => String(Math.floor(v / 60)).padStart(2, '0') + ':' + String(v % 60).padStart(2, '0') + ' left', skip: 0.04, seed: 3 });
+M.mark(CUT.land, 'cut', 'proof 1 -> reels land');
+M.hide('#chipB', 224); M.show('#chipB2', 224, CUT.land);
+
+// MISS words
+M.show('#wMiss', 267, 294); M.enter('#wMiss', { at: 267, frames: 10, ease: 'crashIn', from: { scale: 2.4, blur: 14 } });
+M.kf('#wMiss', 'scale', [[277, 1], [294, 1.08, 'gentleIn']]);
+M.show('#wRun', 296, CUT.rematch); M.words('#wRun', { at: 296, mech: 'rise', dist: 60, gaps: [4, 4, 6], smear: true, accent: { color: ACC_GOLD, frames: 20, word: 'all' } });
+
+// PROOF 2: rematch card
+M.mark(CUT.rematch, 'cut', 'MISS -> rematch');
+M.show('#pD', CUT.rematch, CUT.knob2);
+M.kf('#camD', 'scale', [[0, 2.6], [CUT.knob2, 2.6]]);
+M.enter('#enD', { at: CUT.rematch, frames: 12, ease: 'softLand', from: { x: -1500, blur: 0 }, smear: { axis: 'x', px: 60, frames: 4 } });
+M.drift('#enD', { prop: 'scale', from: 1.0, to: 1.05, start: CUT.rematch + 12, end: CUT.knob2 });
+M.count('#amtD', { at: CUT.rematch + 26, from: 0.1, to: 0.2, frames: 16, round: false, format: (v) => v.toFixed(3) + ' SOL', skip: 0, seed: 2 });
+
+// HIT
+M.show('#wHIT', 484, CUT.final); M.enter('#wHIT', { at: 484, frames: 11, ease: 'crashIn', from: { scale: 2.6, blur: 16 } });
+M.kf('#wHIT', 'scale', [[495, 1], [CUT.final, 1.06, 'gentleIn']]);
+M.show('#wDuck', 502, CUT.final); M.enter('#wDuck', { at: 502, frames: 12, ease: 'softLand', from: { y: 36, blur: 0 }, smear: { axis: 'y', px: 20, frames: 3 } });
+M.show('#claim', 512, CUT.final); M.enter('#claim', { at: 512, frames: 12, ease: 'softLand', from: { y: 50, scale: .9 }, smear: { axis: 'y', px: 20, frames: 3 } });
+M.count('#claimTxt', { at: 516, from: 0, to: 0.333, frames: 9, round: false, format: (v) => 'Claim ' + v.toFixed(3) + ' SOL', skip: 0, seed: 7 });
+
+// END
+M.show('#wTag', 556, 601); M.words('#wTag', { at: 556, mech: 'rise', dist: 70, gaps: [5, 3, 3, 4, 8], smear: true, accent: { color: ACC_GOLD, frames: 24, word: -1 } });
+M.kf('#wTag', 'scale', [[556, 1], [600, 1.03]]);
+M.show('#wSub', 586, 601); M.enter('#wSub', { at: 586, frames: 14, ease: 'softLand', from: { y: 18 } });
+
+window.__ready = Motion.loaded().then(() => {
+  // cursor path in the card's own pixels (transform-free offsets): comes in from the lower right, parks on the button, presses
+  const card = document.querySelector('#camD .card'), btn = document.getElementById('lockD');
+  const bx = card.offsetLeft + btn.offsetLeft + btn.offsetWidth * 0.72, by = card.offsetTop + btn.offsetTop + btn.offsetHeight * 0.5;
+  M.cursor('#cursor', { keys: [[CUT.rematch + 18, bx + 230, by + 190, 1.8, -20], [CUT.rematch + 52, bx, by, 1.0, 0]], ease: 'glide' });
+  M.press('#cursor', '#lockD', { at: CUT.knob2 - 3, cursorDepth: .8, targetDepth: .92, lag: 1, frames: 3, release: false }); if (/selftest/.test(location.search)) Motion.selfTest(M, { samples: 12 }); });
+</script>
+</body>
+</html>

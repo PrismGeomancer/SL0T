@@ -1,0 +1,386 @@
+[
+ {
+  "t": 0,
+  "frame": 0,
+  "type": "show",
+  "label": "#wLaunch"
+ },
+ {
+  "t": 0,
+  "frame": 0,
+  "type": "hide",
+  "label": "#pB"
+ },
+ {
+  "t": 0.1333,
+  "frame": 4,
+  "type": "enter",
+  "label": "Launch"
+ },
+ {
+  "t": 0.1333,
+  "frame": 4,
+  "type": "word",
+  "label": "Launch"
+ },
+ {
+  "t": 0.2667,
+  "frame": 8,
+  "type": "enter",
+  "label": "a"
+ },
+ {
+  "t": 0.2667,
+  "frame": 8,
+  "type": "word",
+  "label": "a"
+ },
+ {
+  "t": 0.4,
+  "frame": 12,
+  "type": "enter",
+  "label": "coin."
+ },
+ {
+  "t": 0.4,
+  "frame": 12,
+  "type": "word",
+  "label": "coin."
+ },
+ {
+  "t": 2,
+  "frame": 60,
+  "type": "show",
+  "label": "#wHit"
+ },
+ {
+  "t": 2,
+  "frame": 60,
+  "type": "enter",
+  "label": "Hit"
+ },
+ {
+  "t": 2,
+  "frame": 60,
+  "type": "word",
+  "label": "Hit"
+ },
+ {
+  "t": 2.1667,
+  "frame": 65,
+  "type": "enter",
+  "label": "or"
+ },
+ {
+  "t": 2.1667,
+  "frame": 65,
+  "type": "word",
+  "label": "or"
+ },
+ {
+  "t": 2.3,
+  "frame": 69,
+  "type": "enter",
+  "label": "miss."
+ },
+ {
+  "t": 2.3,
+  "frame": 69,
+  "type": "word",
+  "label": "miss."
+ },
+ {
+  "t": 3.4,
+  "frame": 102,
+  "type": "cut",
+  "label": "show #pB"
+ },
+ {
+  "t": 3.4,
+  "frame": 102,
+  "type": "show",
+  "label": "#pB"
+ },
+ {
+  "t": 3.4,
+  "frame": 102,
+  "type": "enter",
+  "label": "#enB"
+ },
+ {
+  "t": 3.6667,
+  "frame": 110,
+  "type": "count",
+  "label": "start 0"
+ },
+ {
+  "t": 3.7333,
+  "frame": 112,
+  "type": "count",
+  "label": "start 1440"
+ },
+ {
+  "t": 7.1333,
+  "frame": 214,
+  "type": "count",
+  "label": "land 71"
+ },
+ {
+  "t": 7.4667,
+  "frame": 224,
+  "type": "count",
+  "label": "land 0"
+ },
+ {
+  "t": 7.4667,
+  "frame": 224,
+  "type": "hide",
+  "label": "#chipB"
+ },
+ {
+  "t": 7.4667,
+  "frame": 224,
+  "type": "show",
+  "label": "#chipB2"
+ },
+ {
+  "t": 7.7333,
+  "frame": 232,
+  "type": "cut",
+  "label": "proof 1 -> reels land"
+ },
+ {
+  "t": 8.9,
+  "frame": 267,
+  "type": "show",
+  "label": "#wMiss"
+ },
+ {
+  "t": 8.9,
+  "frame": 267,
+  "type": "enter",
+  "label": "#wMiss"
+ },
+ {
+  "t": 9.0667,
+  "frame": 272,
+  "type": "cut",
+  "label": "land -> close on window"
+ },
+ {
+  "t": 9.8667,
+  "frame": 296,
+  "type": "show",
+  "label": "#wRun"
+ },
+ {
+  "t": 9.8667,
+  "frame": 296,
+  "type": "enter",
+  "label": "Run"
+ },
+ {
+  "t": 9.8667,
+  "frame": 296,
+  "type": "word",
+  "label": "Run"
+ },
+ {
+  "t": 10,
+  "frame": 300,
+  "type": "enter",
+  "label": "it"
+ },
+ {
+  "t": 10,
+  "frame": 300,
+  "type": "word",
+  "label": "it"
+ },
+ {
+  "t": 10.1333,
+  "frame": 304,
+  "type": "enter",
+  "label": "back."
+ },
+ {
+  "t": 10.1333,
+  "frame": 304,
+  "type": "word",
+  "label": "back."
+ },
+ {
+  "t": 10.7333,
+  "frame": 322,
+  "type": "cut",
+  "label": "MISS -> rematch"
+ },
+ {
+  "t": 10.7333,
+  "frame": 322,
+  "type": "show",
+  "label": "#pD"
+ },
+ {
+  "t": 10.7333,
+  "frame": 322,
+  "type": "enter",
+  "label": "#enD"
+ },
+ {
+  "t": 11.6,
+  "frame": 348,
+  "type": "count",
+  "label": "start 0.1"
+ },
+ {
+  "t": 12.1333,
+  "frame": 364,
+  "type": "count",
+  "label": "land 0.2"
+ },
+ {
+  "t": 13.2333,
+  "frame": 397,
+  "type": "press",
+  "label": "#lockD"
+ },
+ {
+  "t": 13.3333,
+  "frame": 400,
+  "type": "cut",
+  "label": "press -> knob"
+ },
+ {
+  "t": 16.1333,
+  "frame": 484,
+  "type": "show",
+  "label": "#wHIT"
+ },
+ {
+  "t": 16.1333,
+  "frame": 484,
+  "type": "enter",
+  "label": "#wHIT"
+ },
+ {
+  "t": 16.7333,
+  "frame": 502,
+  "type": "show",
+  "label": "#wDuck"
+ },
+ {
+  "t": 16.7333,
+  "frame": 502,
+  "type": "enter",
+  "label": "#wDuck"
+ },
+ {
+  "t": 17.0667,
+  "frame": 512,
+  "type": "show",
+  "label": "#claim"
+ },
+ {
+  "t": 17.0667,
+  "frame": 512,
+  "type": "enter",
+  "label": "#claim"
+ },
+ {
+  "t": 17.2,
+  "frame": 516,
+  "type": "count",
+  "label": "start 0"
+ },
+ {
+  "t": 17.5,
+  "frame": 525,
+  "type": "count",
+  "label": "land 0.333"
+ },
+ {
+  "t": 17.6,
+  "frame": 528,
+  "type": "cut",
+  "label": "777 -> final"
+ },
+ {
+  "t": 18.5333,
+  "frame": 556,
+  "type": "show",
+  "label": "#wTag"
+ },
+ {
+  "t": 18.5333,
+  "frame": 556,
+  "type": "enter",
+  "label": "Every"
+ },
+ {
+  "t": 18.5333,
+  "frame": 556,
+  "type": "word",
+  "label": "Every"
+ },
+ {
+  "t": 18.7,
+  "frame": 561,
+  "type": "enter",
+  "label": "launch"
+ },
+ {
+  "t": 18.7,
+  "frame": 561,
+  "type": "word",
+  "label": "launch"
+ },
+ {
+  "t": 18.8,
+  "frame": 564,
+  "type": "enter",
+  "label": "is"
+ },
+ {
+  "t": 18.8,
+  "frame": 564,
+  "type": "word",
+  "label": "is"
+ },
+ {
+  "t": 18.9,
+  "frame": 567,
+  "type": "enter",
+  "label": "a"
+ },
+ {
+  "t": 18.9,
+  "frame": 567,
+  "type": "word",
+  "label": "a"
+ },
+ {
+  "t": 19.0333,
+  "frame": 571,
+  "type": "enter",
+  "label": "pull."
+ },
+ {
+  "t": 19.0333,
+  "frame": 571,
+  "type": "word",
+  "label": "pull."
+ },
+ {
+  "t": 19.5333,
+  "frame": 586,
+  "type": "show",
+  "label": "#wSub"
+ },
+ {
+  "t": 19.5333,
+  "frame": 586,
+  "type": "enter",
+  "label": "#wSub"
+ }
+]
