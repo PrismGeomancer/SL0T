@@ -28,7 +28,7 @@ jobs:
       - run: pnpm -C app test
       - name: Build
         env:
-          VITE_BASE: /${{ github.event.repository.name }}/
+          VITE_BASE: /
           # Optional build-time overrides of app/src/config.ts (repo Settings > Secrets / Variables).
           VITE_RPC_URL: ${{ secrets.VITE_RPC_URL }}
           VITE_PROGRAM_ID: ${{ vars.PROGRAM_ID }}
